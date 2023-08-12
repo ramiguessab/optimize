@@ -14,7 +14,7 @@ export default function CheckIn() {
                 qrbox: { width: 300, height: 300 },
             },
             (text) => {
-                console.log(text);
+                alert(text);
             },
             () => {}
         );
