@@ -65,12 +65,12 @@ export default function Quiz() {
                 {questions.length}
             </span>
             <div className="border border-dashed border-neutral-300" />
-            <div className="flex flex-col justify-between py-8 h-full">
+            <div className="flex flex-col justify-between pb-8 pt-4 h-full">
                 <h1 className="text-2xl leading-normal capitalize">
                     {question.question}?
                 </h1>
 
-                <div className="flex flex-col gap-12">
+                <div className="flex flex-col gap-8">
                     <Choises choises={question.choises} />
                     <Button
                         onClick={() => {

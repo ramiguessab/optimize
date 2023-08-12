@@ -43,6 +43,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["clsx", "npm:2.0.0"],\
             ["eslint", "npm:8.46.0"],\
             ["eslint-config-next", "virtual:cd204bcb2ba3a6f6bf4bc2e7e439eb18b5b985fe7af91dc228024f65c712e3d53ff70ea3e90120a185a4d813557adbb23859ca40c81ea3909829155d4ae555bf#npm:13.4.13"],\
+            ["html5-qrcode", "npm:2.3.8"],\
             ["lucide-react", "virtual:cd204bcb2ba3a6f6bf4bc2e7e439eb18b5b985fe7af91dc228024f65c712e3d53ff70ea3e90120a185a4d813557adbb23859ca40c81ea3909829155d4ae555bf#npm:0.263.1"],\
             ["next", "virtual:cd204bcb2ba3a6f6bf4bc2e7e439eb18b5b985fe7af91dc228024f65c712e3d53ff70ea3e90120a185a4d813557adbb23859ca40c81ea3909829155d4ae555bf#npm:13.4.13"],\
             ["postcss", "npm:8.4.27"],\
@@ -3490,6 +3491,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["html5-qrcode", [\
+        ["npm:2.3.8", {\
+          "packageLocation": "./.yarn/cache/html5-qrcode-npm-2.3.8-2e0c8061e2-14b2bd6925.zip/node_modules/html5-qrcode/",\
+          "packageDependencies": [\
+            ["html5-qrcode", "npm:2.3.8"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["http-cache-semantics", [\
         ["npm:4.1.1", {\
           "packageLocation": "./.yarn/cache/http-cache-semantics-npm-4.1.1-1120131375-83ac0bc60b.zip/node_modules/http-cache-semantics/",\
@@ -4703,6 +4713,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["clsx", "npm:2.0.0"],\
             ["eslint", "npm:8.46.0"],\
             ["eslint-config-next", "virtual:cd204bcb2ba3a6f6bf4bc2e7e439eb18b5b985fe7af91dc228024f65c712e3d53ff70ea3e90120a185a4d813557adbb23859ca40c81ea3909829155d4ae555bf#npm:13.4.13"],\
+            ["html5-qrcode", "npm:2.3.8"],\
             ["lucide-react", "virtual:cd204bcb2ba3a6f6bf4bc2e7e439eb18b5b985fe7af91dc228024f65c712e3d53ff70ea3e90120a185a4d813557adbb23859ca40c81ea3909829155d4ae555bf#npm:0.263.1"],\
             ["next", "virtual:cd204bcb2ba3a6f6bf4bc2e7e439eb18b5b985fe7af91dc228024f65c712e3d53ff70ea3e90120a185a4d813557adbb23859ca40c81ea3909829155d4ae555bf#npm:13.4.13"],\
             ["postcss", "npm:8.4.27"],\
