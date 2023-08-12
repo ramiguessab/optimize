@@ -21,7 +21,7 @@ export default function CheckIn() {
     }, []);
 
     return (
-        <div className="h-[calc(100dvh_-_106px)] flex flex-col justify-center items-center">
+        <div className="h-[calc(100dvh_-_106px)] pt-8">
             <div id="qr" />
         </div>
     );
