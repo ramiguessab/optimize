@@ -73,6 +73,7 @@ export default function Quiz() {
                 <div className="flex flex-col gap-8">
                     <Choises choises={question.choises} />
                     <Button
+                        className="hover:bg-neutral-900"
                         onClick={() => {
                             setQuestionNum((prev) => prev + 1);
                         }}

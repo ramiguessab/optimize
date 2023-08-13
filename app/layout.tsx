@@ -1,10 +1,11 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import NavigationBar from "@/components/navbar";
+import AdminNavbar from "@/components/adminNavbar";
 
 import { Fira_Sans_Condensed, Nunito, Inter } from "next/font/google";
 
-const inter = Nunito({ weight: "800", subsets: ["latin"] });
+const inter = Nunito({ weight: ["800"], subsets: ["latin"] });
 
 export const metadata: Metadata = {
     title: "Create Next App",
@@ -21,6 +22,7 @@ export default function RootLayout({
             <body className={inter.className}>
                 <NavigationBar />
                 {children}
+                <AdminNavbar />
             </body>
         </html>
     );
