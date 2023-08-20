@@ -9,6 +9,7 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import FirestoreRequest from "@/firebase/firestore";
+import { QuerySnapshot } from "firebase/firestore";
 
 interface QuizResult {
     answers: boolean[];
@@ -21,8 +22,8 @@ const QuizTable = () => {
     useEffect(() => {
         return new FirestoreRequest("quiz_response").onSnapshot((snap) => {
             const resultTemp: QuizResult[] = [];
-            snap.docs.forEach((doc) => {
-                resultTemp.push(doc.data());
+            (snap as QuerySnapshot).docs.forEach((doc) => {
+                resultTemp.push(doc.data() as QuizResult);
             });
 
             setResults([...resultTemp]);

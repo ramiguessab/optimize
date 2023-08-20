@@ -4,6 +4,7 @@ import {
     DocumentData,
     DocumentSnapshot,
     Query,
+    QueryDocumentSnapshot,
     QuerySnapshot,
 } from "firebase/firestore";
 import {
