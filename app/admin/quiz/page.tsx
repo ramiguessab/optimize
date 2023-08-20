@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import { useEffect, useState } from "react";
 import {
     Table,
     TableBody,
@@ -7,12 +8,27 @@ import {
     TableHead,
     TableRow,
 } from "@/components/ui/table";
+import FirestoreRequest from "@/firebase/firestore";
 
 interface QuizResult {
-    correct: number;
+    answers: boolean[];
+    started: Date;
+    finished: Date;
 }
 
 const QuizTable = () => {
+    const [results, setResults] = useState<QuizResult[]>([]);
+    useEffect(() => {
+        return new FirestoreRequest("quiz_response").onSnapshot((snap) => {
+            const resultTemp: QuizResult[] = [];
+            snap.docs.forEach((doc) => {
+                resultTemp.push(doc.data());
+            });
+
+            setResults([...resultTemp]);
+        }, "collection");
+    }, []);
+
     return (
         <Table>
             <TableHeader>
@@ -23,11 +39,17 @@ const QuizTable = () => {
                 </TableRow>
             </TableHeader>
             <TableBody>
-                <TableRow>
-                    <TableCell>Rami Guessab</TableCell>
-                    <TableCell>{[...Array(10)].map(() => "✅ ")}</TableCell>
-                    <TableCell>1:26 minutes </TableCell>
-                </TableRow>
+                {results.map((result, index) => (
+                    <TableRow key={index}>
+                        <TableCell>Rami Guessab</TableCell>
+                        <TableCell>
+                            {result.answers.map((answer) =>
+                                answer ? " ✅" : " ❌"
+                            )}
+                        </TableCell>
+                        <TableCell>1:26 minutes </TableCell>
+                    </TableRow>
+                ))}
             </TableBody>
         </Table>
     );

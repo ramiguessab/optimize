@@ -41,20 +41,15 @@ export default function AdminNavbar() {
                         pathSplited.at(-1) === route.route ||
                         (pathSplited.length === 2 && route.route === "/");
                     return (
-                        <>
-                            <Link
-                                href={`/admin/${route.route}`}
-                                key={route.route}
+                        <Link href={`/admin/${route.route}`} key={route.route}>
+                            <Button
+                                variant={selected ? "default" : "ghost"}
+                                className="gap-2 capitalize"
                             >
-                                <Button
-                                    variant={selected ? "default" : "ghost"}
-                                    className="gap-2 capitalize"
-                                >
-                                    <route.icon />
-                                    {selected && route.displayName}
-                                </Button>
-                            </Link>
-                        </>
+                                <route.icon />
+                                {selected && route.displayName}
+                            </Button>
+                        </Link>
                     );
                 })}
             </div>

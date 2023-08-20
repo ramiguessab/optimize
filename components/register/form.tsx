@@ -23,21 +23,22 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
+import FirestoreRequest from "@/firebase/firestore";
 
 const formSchema = z.object({
     first_name: z.string(),
     last_name: z.string(),
     email: z.string(),
-    age: z.string(),
+    birth_year: z.string(),
     work: z.string(),
     more: z.string(),
     first_edition: z.string(),
 });
 
-type formType = z.infer<typeof formSchema>;
+export type RegistrationSchema = z.infer<typeof formSchema>;
 
 export default function RegistrationForm() {
-    const form = useForm<formType>({
+    const form = useForm<RegistrationSchema>({
         resolver: zodResolver(formSchema),
     });
 
@@ -46,7 +47,13 @@ export default function RegistrationForm() {
             <form
                 className="flex gap-8 flex-col"
                 onSubmit={form.handleSubmit((value) => {
-                    console.log(value);
+                    new FirestoreRequest("registered").addDoc({
+                        ...value,
+                        accepted: false,
+                        birth_year: parseInt(value.birth_year),
+                        first_edition:
+                            value.first_edition === "yes" ? true : false,
+                    });
                 })}
             >
                 <FormField
@@ -135,7 +142,7 @@ export default function RegistrationForm() {
                 />
 
                 <FormField
-                    name="age"
+                    name="birth_year"
                     control={form.control}
                     render={({ field }) => (
                         <FormItem>

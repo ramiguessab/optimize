@@ -128,7 +128,6 @@ export default function CheckIn() {
     return (
         <div className="h-[calc(100dvh_-_106px)] pt-8">
             {id && <ResultDialog id={id} setId={setId} />}
-
             <div id="qr" />
         </div>
     );
