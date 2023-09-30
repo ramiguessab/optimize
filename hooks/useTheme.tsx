@@ -21,7 +21,9 @@ function setLocalStorage(theme: "dark" | "light") {
 }
 
 export default function useTheme(): ["dark" | "light", () => void] {
-    const [theme, setTheme] = useState<"light" | "dark">(checkTheme());
+    const [theme, setTheme] = useState<"light" | "dark">(
+        (typeof window === "undefined" && "dark") || checkTheme()
+    );
     useEffect(() => {
         const html = document.querySelector("html");
         if (theme === "light") {
