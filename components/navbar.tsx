@@ -29,6 +29,9 @@ export default function NavigationBar() {
                     />
                 </Link>
                 <div className="flex items-center gap-4">
+                    <Link href={"/quiz"}>
+                        <Button variant={"ghost"}>Quiz</Button>
+                    </Link>
                     <Link href={"/admin"}>
                         <Button variant={"ghost"}>Admin</Button>
                     </Link>
