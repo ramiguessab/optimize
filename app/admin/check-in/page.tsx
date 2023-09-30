@@ -20,12 +20,12 @@ interface ICheckIn extends Object {
     present: boolean;
 }
 
-const check_in: ICheckIn = {
-    id: "3ByukRGOoBM4FsJPEu22",
-    first_name: "rami",
-    last_name: "guessab",
-    present: false,
-};
+interface DialogResult {
+    used: boolean;
+    found: boolean;
+    first_name: string;
+    last_name: string;
+}
 
 const ResultDialog = ({
     id,
@@ -34,7 +34,13 @@ const ResultDialog = ({
     id?: string;
     setId: (id: string) => void;
 }) => {
-    const [result, setResult] = useState({});
+    const [loading, setLoading] = useState(true);
+    const [result, setResult] = useState<DialogResult>({
+        used: false,
+        first_name: "",
+        last_name: "",
+        found: false,
+    });
 
     useEffect(() => {
         new FirestoreRequest("registered")
@@ -43,11 +49,17 @@ const ResultDialog = ({
                 const check_in = doc as DocumentSnapshot;
                 const data = check_in.data() as ICheckIn;
                 const used = data.present;
-                const first = data.first_name;
-                const last = data.last_name;
+                const first_name = data.first_name;
+                const last_name = data.last_name;
                 const found = true;
+                setResult({ used, first_name, last_name, found });
+                setLoading(false);
             });
     }, []);
+
+    if (loading) {
+        return null;
+    }
 
     return (
         <Dialog defaultOpen>
@@ -55,19 +67,19 @@ const ResultDialog = ({
                 <DialogHeader>
                     <DialogTitle>check in result</DialogTitle>
                     <DialogDescription>
-                        {used
+                        {result.used
                             ? "gotcha 👮"
-                            : found
+                            : result!.found
                             ? "welcome"
                             : "invalid or not found"}
                     </DialogDescription>
                 </DialogHeader>
                 <div className="flex gap-4 items-center">
                     <div className="text-9xl">
-                        {used ? "⁉️" : found ? "✅" : "❌"}
+                        {result.used ? "⁉️" : result.found ? "✅" : "❌"}
                     </div>
                     <div className="leading-relaxed">
-                        {found ? (
+                        {result.found ? (
                             <>
                                 <h1 className="mx-auto w-fit text-2xl"></h1>
 
@@ -85,7 +97,7 @@ const ResultDialog = ({
                                     </span>
                                     <span className="text-neutral-700">
                                         {" "}
-                                        {first}
+                                        {result.first_name}
                                     </span>
                                 </p>
 
@@ -95,7 +107,7 @@ const ResultDialog = ({
                                     </span>
                                     <span className="text-neutral-700">
                                         {" "}
-                                        {last}
+                                        {result.last_name}
                                     </span>
                                 </p>
                             </>
