@@ -33,7 +33,7 @@ const QuizTable = () => {
     return (
         <Table>
             <TableHeader>
-                <TableRow>
+                <TableRow className="dark:border-b-neutral-900">
                     <TableHead>Name</TableHead>
                     <TableHead>Result</TableHead>
                     <TableHead>Time</TableHead>
@@ -41,7 +41,7 @@ const QuizTable = () => {
             </TableHeader>
             <TableBody>
                 {results.map((result, index) => (
-                    <TableRow key={index}>
+                    <TableRow key={index} className="dark:border-b-neutral-900">
                         <TableCell>Rami Guessab</TableCell>
                         <TableCell>
                             {result.answers.map((answer) =>

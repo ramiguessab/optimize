@@ -3,9 +3,9 @@ import type { Metadata } from "next";
 import NavigationBar from "@/components/navbar";
 import AdminNavbar from "@/components/adminNavbar";
 
-import { Fira_Sans_Condensed, Nunito, Inter } from "next/font/google";
+import { Nunito } from "next/font/google";
 
-const inter = Nunito({ weight: ["800"], subsets: ["latin"] });
+const nunito = Nunito({ weight: ["800"], subsets: ["latin"] });
 
 export const metadata: Metadata = {
     title: "Create Next App",
@@ -19,7 +19,9 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en">
-            <body className={inter.className}>
+            <body
+                className={`${nunito.className} dark:bg-black dark:text-neutral-300`}
+            >
                 <NavigationBar />
                 {children}
                 <AdminNavbar />

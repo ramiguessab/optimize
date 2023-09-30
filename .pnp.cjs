@@ -45,11 +45,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.46.0"],\
             ["eslint-config-next", "virtual:cd204bcb2ba3a6f6bf4bc2e7e439eb18b5b985fe7af91dc228024f65c712e3d53ff70ea3e90120a185a4d813557adbb23859ca40c81ea3909829155d4ae555bf#npm:13.4.13"],\
             ["firebase", "npm:10.2.0"],\
+            ["framer-motion", "virtual:cd204bcb2ba3a6f6bf4bc2e7e439eb18b5b985fe7af91dc228024f65c712e3d53ff70ea3e90120a185a4d813557adbb23859ca40c81ea3909829155d4ae555bf#npm:10.16.0"],\
             ["html5-qrcode", "npm:2.3.8"],\
             ["lucide-react", "virtual:cd204bcb2ba3a6f6bf4bc2e7e439eb18b5b985fe7af91dc228024f65c712e3d53ff70ea3e90120a185a4d813557adbb23859ca40c81ea3909829155d4ae555bf#npm:0.263.1"],\
             ["next", "virtual:cd204bcb2ba3a6f6bf4bc2e7e439eb18b5b985fe7af91dc228024f65c712e3d53ff70ea3e90120a185a4d813557adbb23859ca40c81ea3909829155d4ae555bf#npm:13.4.13"],\
             ["postcss", "npm:8.4.27"],\
             ["react", "npm:18.2.0"],\
+            ["react-confetti", "virtual:cd204bcb2ba3a6f6bf4bc2e7e439eb18b5b985fe7af91dc228024f65c712e3d53ff70ea3e90120a185a4d813557adbb23859ca40c81ea3909829155d4ae555bf#npm:6.1.0"],\
             ["react-dom", "virtual:cd204bcb2ba3a6f6bf4bc2e7e439eb18b5b985fe7af91dc228024f65c712e3d53ff70ea3e90120a185a4d813557adbb23859ca40c81ea3909829155d4ae555bf#npm:18.2.0"],\
             ["react-hook-form", "virtual:cd204bcb2ba3a6f6bf4bc2e7e439eb18b5b985fe7af91dc228024f65c712e3d53ff70ea3e90120a185a4d813557adbb23859ca40c81ea3909829155d4ae555bf#npm:7.45.4"],\
             ["tailwind-merge", "npm:1.14.0"],\
@@ -86,6 +88,25 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@babel/runtime", "npm:7.22.10"],\
             ["regenerator-runtime", "npm:0.14.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@emotion/is-prop-valid", [\
+        ["npm:0.8.8", {\
+          "packageLocation": "./.yarn/cache/@emotion-is-prop-valid-npm-0.8.8-261a0f2426-bb7ec6d48c.zip/node_modules/@emotion/is-prop-valid/",\
+          "packageDependencies": [\
+            ["@emotion/is-prop-valid", "npm:0.8.8"],\
+            ["@emotion/memoize", "npm:0.7.4"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@emotion/memoize", [\
+        ["npm:0.7.4", {\
+          "packageLocation": "./.yarn/cache/@emotion-memoize-npm-0.7.4-5648cf11b8-4e3920d4ec.zip/node_modules/@emotion/memoize/",\
+          "packageDependencies": [\
+            ["@emotion/memoize", "npm:0.7.4"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -4389,6 +4410,34 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["framer-motion", [\
+        ["npm:10.16.0", {\
+          "packageLocation": "./.yarn/cache/framer-motion-npm-10.16.0-da72689a03-155fd0fc81.zip/node_modules/framer-motion/",\
+          "packageDependencies": [\
+            ["framer-motion", "npm:10.16.0"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:cd204bcb2ba3a6f6bf4bc2e7e439eb18b5b985fe7af91dc228024f65c712e3d53ff70ea3e90120a185a4d813557adbb23859ca40c81ea3909829155d4ae555bf#npm:10.16.0", {\
+          "packageLocation": "./.yarn/__virtual__/framer-motion-virtual-ff603e4033/0/cache/framer-motion-npm-10.16.0-da72689a03-155fd0fc81.zip/node_modules/framer-motion/",\
+          "packageDependencies": [\
+            ["framer-motion", "virtual:cd204bcb2ba3a6f6bf4bc2e7e439eb18b5b985fe7af91dc228024f65c712e3d53ff70ea3e90120a185a4d813557adbb23859ca40c81ea3909829155d4ae555bf#npm:10.16.0"],\
+            ["@emotion/is-prop-valid", "npm:0.8.8"],\
+            ["@types/react", "npm:18.2.19"],\
+            ["@types/react-dom", "npm:18.2.7"],\
+            ["react", "npm:18.2.0"],\
+            ["react-dom", "virtual:cd204bcb2ba3a6f6bf4bc2e7e439eb18b5b985fe7af91dc228024f65c712e3d53ff70ea3e90120a185a4d813557adbb23859ca40c81ea3909829155d4ae555bf#npm:18.2.0"],\
+            ["tslib", "npm:2.6.1"]\
+          ],\
+          "packagePeers": [\
+            "@types/react-dom",\
+            "@types/react",\
+            "react-dom",\
+            "react"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["fs-extra", [\
         ["npm:8.1.0", {\
           "packageLocation": "./.yarn/cache/fs-extra-npm-8.1.0-197473387f-bf44f0e6ce.zip/node_modules/fs-extra/",\
@@ -6093,11 +6142,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint", "npm:8.46.0"],\
             ["eslint-config-next", "virtual:cd204bcb2ba3a6f6bf4bc2e7e439eb18b5b985fe7af91dc228024f65c712e3d53ff70ea3e90120a185a4d813557adbb23859ca40c81ea3909829155d4ae555bf#npm:13.4.13"],\
             ["firebase", "npm:10.2.0"],\
+            ["framer-motion", "virtual:cd204bcb2ba3a6f6bf4bc2e7e439eb18b5b985fe7af91dc228024f65c712e3d53ff70ea3e90120a185a4d813557adbb23859ca40c81ea3909829155d4ae555bf#npm:10.16.0"],\
             ["html5-qrcode", "npm:2.3.8"],\
             ["lucide-react", "virtual:cd204bcb2ba3a6f6bf4bc2e7e439eb18b5b985fe7af91dc228024f65c712e3d53ff70ea3e90120a185a4d813557adbb23859ca40c81ea3909829155d4ae555bf#npm:0.263.1"],\
             ["next", "virtual:cd204bcb2ba3a6f6bf4bc2e7e439eb18b5b985fe7af91dc228024f65c712e3d53ff70ea3e90120a185a4d813557adbb23859ca40c81ea3909829155d4ae555bf#npm:13.4.13"],\
             ["postcss", "npm:8.4.27"],\
             ["react", "npm:18.2.0"],\
+            ["react-confetti", "virtual:cd204bcb2ba3a6f6bf4bc2e7e439eb18b5b985fe7af91dc228024f65c712e3d53ff70ea3e90120a185a4d813557adbb23859ca40c81ea3909829155d4ae555bf#npm:6.1.0"],\
             ["react-dom", "virtual:cd204bcb2ba3a6f6bf4bc2e7e439eb18b5b985fe7af91dc228024f65c712e3d53ff70ea3e90120a185a4d813557adbb23859ca40c81ea3909829155d4ae555bf#npm:18.2.0"],\
             ["react-hook-form", "virtual:cd204bcb2ba3a6f6bf4bc2e7e439eb18b5b985fe7af91dc228024f65c712e3d53ff70ea3e90120a185a4d813557adbb23859ca40c81ea3909829155d4ae555bf#npm:7.45.4"],\
             ["tailwind-merge", "npm:1.14.0"],\
@@ -6482,6 +6533,29 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["react", "npm:18.2.0"],\
             ["loose-envify", "npm:1.4.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["react-confetti", [\
+        ["npm:6.1.0", {\
+          "packageLocation": "./.yarn/cache/react-confetti-npm-6.1.0-9b9e19a3c8-24b6975df1.zip/node_modules/react-confetti/",\
+          "packageDependencies": [\
+            ["react-confetti", "npm:6.1.0"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:cd204bcb2ba3a6f6bf4bc2e7e439eb18b5b985fe7af91dc228024f65c712e3d53ff70ea3e90120a185a4d813557adbb23859ca40c81ea3909829155d4ae555bf#npm:6.1.0", {\
+          "packageLocation": "./.yarn/__virtual__/react-confetti-virtual-13d0ba65d5/0/cache/react-confetti-npm-6.1.0-9b9e19a3c8-24b6975df1.zip/node_modules/react-confetti/",\
+          "packageDependencies": [\
+            ["react-confetti", "virtual:cd204bcb2ba3a6f6bf4bc2e7e439eb18b5b985fe7af91dc228024f65c712e3d53ff70ea3e90120a185a4d813557adbb23859ca40c81ea3909829155d4ae555bf#npm:6.1.0"],\
+            ["@types/react", "npm:18.2.19"],\
+            ["react", "npm:18.2.0"],\
+            ["tween-functions", "npm:1.2.0"]\
+          ],\
+          "packagePeers": [\
+            "@types/react",\
+            "react"\
           ],\
           "linkType": "HARD"\
         }]\
@@ -7375,6 +7449,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/tslib-npm-2.6.1-de28eba753-b0d176d176.zip/node_modules/tslib/",\
           "packageDependencies": [\
             ["tslib", "npm:2.6.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["tween-functions", [\
+        ["npm:1.2.0", {\
+          "packageLocation": "./.yarn/cache/tween-functions-npm-1.2.0-4c24ac77a5-880708d680.zip/node_modules/tween-functions/",\
+          "packageDependencies": [\
+            ["tween-functions", "npm:1.2.0"]\
           ],\
           "linkType": "HARD"\
         }]\

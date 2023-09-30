@@ -6,6 +6,7 @@ import {
     Query,
     QueryDocumentSnapshot,
     QuerySnapshot,
+    where,
 } from "firebase/firestore";
 import {
     doc,
@@ -16,6 +17,8 @@ import {
     updateDoc,
     deleteDoc,
     onSnapshot,
+    query,
+    documentId,
 } from "firebase/firestore";
 
 //create AddDoc
@@ -42,9 +45,11 @@ export default class FirestoreRequest {
         return await addDoc(this.collection, data);
     }
 
-    async getDoc(query: string | Query | CollectionReference) {
+    async getDoc(
+        query: string | Query | CollectionReference
+    ): Promise<DocumentSnapshot | QueryDocumentSnapshot[]> {
         if (typeof query === "string") {
-            return (await getDoc(this.docRef(query as string))).data();
+            return await getDoc(this.docRef(query as string));
         } else {
             return (await getDocs(query)).docs;
         }

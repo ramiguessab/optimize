@@ -10,6 +10,8 @@ import {
     DialogTitle,
     DialogDescription,
 } from "@/components/ui/dialog";
+import FirestoreRequest from "@/firebase/firestore";
+import { DocumentSnapshot } from "firebase/firestore";
 
 interface ICheckIn extends Object {
     id: string;
@@ -32,10 +34,20 @@ const ResultDialog = ({
     id?: string;
     setId: (id: string) => void;
 }) => {
-    const used = check_in.present;
-    const first = check_in.first_name;
-    const last = check_in.last_name;
-    const found = true;
+    const [result, setResult] = useState({});
+
+    useEffect(() => {
+        new FirestoreRequest("registered")
+            .getDoc("MWseEFANrItOl6aqTPq0")
+            .then((doc) => {
+                const check_in = doc as DocumentSnapshot;
+                const data = check_in.data() as ICheckIn;
+                const used = data.present;
+                const first = data.first_name;
+                const last = data.last_name;
+                const found = true;
+            });
+    }, []);
 
     return (
         <Dialog defaultOpen>
@@ -118,9 +130,7 @@ export default function CheckIn() {
                 fps: 30,
                 qrbox: { width: 300, height: 300 },
             },
-            (text) => {
-                setId(text);
-            },
+            (text) => {},
             () => {}
         );
     }, []);

@@ -1,5 +1,6 @@
 "use client";
-
+import SuccessSubmission from "../success";
+import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
@@ -7,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { ScrollArea } from "../ui/scroll-area";
 import {
     Select,
     SelectContent,
@@ -38,6 +40,7 @@ const formSchema = z.object({
 export type RegistrationSchema = z.infer<typeof formSchema>;
 
 export default function RegistrationForm() {
+    const [submited, setSubmited] = useState(false);
     const form = useForm<RegistrationSchema>({
         resolver: zodResolver(formSchema),
     });
@@ -47,15 +50,21 @@ export default function RegistrationForm() {
             <form
                 className="flex gap-8 flex-col"
                 onSubmit={form.handleSubmit((value) => {
-                    new FirestoreRequest("registered").addDoc({
-                        ...value,
-                        accepted: false,
-                        birth_year: parseInt(value.birth_year),
-                        first_edition:
-                            value.first_edition === "yes" ? true : false,
-                    });
+                    new FirestoreRequest("registered")
+                        .addDoc({
+                            ...value,
+                            accepted: false,
+                            email_sent: false,
+                            birth_year: parseInt(value.birth_year),
+                            first_edition:
+                                value.first_edition === "yes" ? true : false,
+                        })
+                        .then(() => {
+                            setSubmited(true);
+                        });
                 })}
             >
+                <SuccessSubmission open={submited} />
                 <FormField
                     name="first_name"
                     control={form.control}
@@ -157,20 +166,21 @@ export default function RegistrationForm() {
                                             placeholder={
                                                 "Select Your Birthyear"
                                             }
-                                        ></SelectValue>
+                                        />
                                     </SelectTrigger>
                                 </FormControl>
-
-                                <SelectContent>
-                                    {[...Array(100)].map((_, index) => (
-                                        <SelectItem
-                                            value={`${2023 - index}`}
-                                            key={index}
-                                        >
-                                            {`${2023 - index}`}
-                                        </SelectItem>
-                                    ))}
-                                </SelectContent>
+                                <ScrollArea>
+                                    <SelectContent className="h-80">
+                                        {[...Array(100)].map((_, index) => (
+                                            <SelectItem
+                                                value={`${2023 - index}`}
+                                                key={index}
+                                            >
+                                                {`${2023 - index}`}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </ScrollArea>
                             </Select>
                             <FormDescription>
                                 Happy Birth Year 😅
@@ -199,12 +209,13 @@ export default function RegistrationForm() {
                                         ></SelectValue>
                                     </SelectTrigger>
                                 </FormControl>
-
-                                <SelectContent>
-                                    <SelectItem value={`student`}>
-                                        {`Student`}
-                                    </SelectItem>
-                                </SelectContent>
+                                <ScrollArea>
+                                    <SelectContent className="max-h-80">
+                                        <SelectItem value={`student`}>
+                                            {`Student`}
+                                        </SelectItem>
+                                    </SelectContent>
+                                </ScrollArea>
                             </Select>
                             <FormDescription>Niiice 🫡</FormDescription>
                             <FormMessage />
@@ -234,7 +245,12 @@ export default function RegistrationForm() {
                         </FormItem>
                     )}
                 />
-                <Button className="bg-yellow-500">Submit</Button>
+
+                {!submited && (
+                    <Button className="bg-yellow-500 dark:bg-yellow-600 dark:text-white dark:hover:text-neutral-950">
+                        Submit
+                    </Button>
+                )}
             </form>
         </Form>
     );
