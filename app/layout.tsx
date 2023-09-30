@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import NavigationBar from "@/components/navbar";
 import AdminNavbar from "@/components/adminNavbar";
+import { ThemeProvider } from "@/components/theme-provider";
 
 import { Nunito } from "next/font/google";
 
@@ -22,9 +23,16 @@ export default function RootLayout({
             <body
                 className={`${nunito.className} dark:bg-black dark:text-neutral-300`}
             >
-                <NavigationBar />
-                {children}
-                <AdminNavbar />
+                <ThemeProvider
+                    attribute="class"
+                    defaultTheme="system"
+                    enableSystem
+                    disableTransitionOnChange
+                >
+                    <NavigationBar />
+                    {children}
+                    <AdminNavbar />
+                </ThemeProvider>
             </body>
         </html>
     );

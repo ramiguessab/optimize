@@ -4,7 +4,6 @@ import { Button } from "./ui/button";
 import { Lightbulb, LucideIcon, ClipboardCheck, Sheet } from "lucide-react";
 import React from "react";
 import Link from "next/link";
-import isPhone from "@/lib/isPhone";
 
 interface IRouter {
     displayName: string;
@@ -32,7 +31,6 @@ const routes: IRouter[] = [
 
 export default function AdminNavbar() {
     const pathname = usePathname();
-    const phone = isPhone();
 
     const pathSplited = pathname.split("/");
     if (pathSplited.includes("admin")) {
@@ -42,24 +40,18 @@ export default function AdminNavbar() {
                     const selected =
                         pathSplited.at(-1) === route.route ||
                         (pathSplited.length === 2 && route.route === "/");
-                    if (route.route === "check-in" && !phone) {
-                        return null;
-                    } else {
-                        return (
-                            <Link
-                                href={`/admin/${route.route}`}
-                                key={route.route}
+
+                    return (
+                        <Link href={`/admin/${route.route}`} key={route.route}>
+                            <Button
+                                variant={selected ? "default" : "ghost"}
+                                className="gap-2 capitalize"
                             >
-                                <Button
-                                    variant={selected ? "default" : "ghost"}
-                                    className="gap-2 capitalize"
-                                >
-                                    <route.icon />
-                                    {selected && route.displayName}
-                                </Button>
-                            </Link>
-                        );
-                    }
+                                <route.icon />
+                                {selected && route.displayName}
+                            </Button>
+                        </Link>
+                    );
                 })}
             </div>
         );

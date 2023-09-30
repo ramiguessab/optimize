@@ -1,4 +1,5 @@
 import { db } from "./app";
+
 import {
     CollectionReference,
     DocumentData,
@@ -7,8 +8,6 @@ import {
     QueryDocumentSnapshot,
     QuerySnapshot,
     where,
-} from "firebase/firestore";
-import {
     doc,
     collection,
     addDoc,

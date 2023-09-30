@@ -3,13 +3,13 @@ import Link from "next/link";
 import { Sun, Moon } from "lucide-react";
 import { Button } from "./ui/button";
 import { usePathname } from "next/navigation";
-import useTheme from "@/hooks/useTheme";
+import { useTheme } from "next-themes";
 import Image from "next/image";
 
 export default function NavigationBar() {
     const pathname = usePathname();
     const splitedPath = pathname.split("/");
-    const [theme, toggleTheme] = useTheme();
+    const { setTheme, theme } = useTheme();
 
     if (
         splitedPath.length >= 3 &&
@@ -28,15 +28,23 @@ export default function NavigationBar() {
                         height={64}
                     />
                 </Link>
-                <Button
-                    variant={"outline"}
-                    size={"icon"}
-                    onClick={() => {
-                        toggleTheme();
-                    }}
-                >
-                    {theme === "dark" ? <Sun /> : <Moon />}
-                </Button>
+                <div className="flex items-center gap-4">
+                    <Link href={"/admin"}>
+                        <Button variant={"ghost"}>Admin</Button>
+                    </Link>
+                    <Button
+                        variant={"outline"}
+                        size={"icon"}
+                        onClick={() => {
+                            theme === "light"
+                                ? setTheme("dark")
+                                : setTheme("light");
+                        }}
+                    >
+                        <Sun className="dark:hidden" />
+                        <Moon className="hidden dark:block" />
+                    </Button>
+                </div>
             </div>
         );
     }
