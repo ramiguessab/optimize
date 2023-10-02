@@ -30,7 +30,7 @@ export default function NavigationBar() {
                 </Link>
                 <div className="flex items-center gap-4">
                     <Link href={"/login"}>
-                        <Button variant={"secondary"}>Login</Button>
+                        <Button variant={"ghost"}>Login</Button>
                     </Link>
                     <Button
                         variant={"outline"}
