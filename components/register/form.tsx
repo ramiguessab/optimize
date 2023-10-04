@@ -1,4 +1,5 @@
 "use client";
+
 import SuccessSubmission from "../success";
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -9,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { ScrollArea } from "../ui/scroll-area";
+import Confetti from "../confetti";
 import {
     Select,
     SelectContent,
@@ -16,6 +18,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
+
 import {
     Form,
     FormControl,
@@ -41,7 +44,9 @@ export type RegistrationSchema = z.infer<typeof formSchema>;
 
 export default function RegistrationForm() {
     const [submited, setSubmited] = useState(false);
+
     const form = useForm<RegistrationSchema>({
+        defaultValues: { first_name: "", email: "", last_name: "", more: "" },
         resolver: zodResolver(formSchema),
     });
 
@@ -60,10 +65,12 @@ export default function RegistrationForm() {
                                 value.first_edition === "yes" ? true : false,
                         })
                         .then(() => {
+                            window.scrollTo(0, 0);
                             setSubmited(true);
                         });
                 })}
             >
+                <Confetti running={submited} />
                 <SuccessSubmission open={submited} />
                 <FormField
                     name="first_name"

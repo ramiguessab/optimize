@@ -102,7 +102,7 @@ export default function Login() {
 
                         <CardFooter>
                             <Button
-                                className="w-full dark:bg-yellow-600 dark:text-white bg-yellow-500 text-black"
+                                className="w-full dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:text-white bg-yellow-500 hover:bg-yellow-600 "
                                 type="submit"
                             >
                                 Login
