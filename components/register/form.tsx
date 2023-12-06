@@ -1,15 +1,18 @@
 "use client";
-
 import SuccessSubmission from "../success";
+import dynamic from "next/dynamic";
+
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { useForm } from "react-hook-form";
+
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { ScrollArea } from "../ui/scroll-area";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import Confetti from "../confetti";
 import {
     Select,
@@ -18,7 +21,6 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
-
 import {
     Form,
     FormControl,
@@ -28,7 +30,6 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
-import FirestoreRequest from "@/firebase/firestore";
 
 const formSchema = z.object({
     first_name: z.string(),
@@ -54,7 +55,11 @@ export default function RegistrationForm() {
         <Form {...form}>
             <form
                 className="flex gap-8 flex-col"
-                onSubmit={form.handleSubmit((value) => {
+                onSubmit={form.handleSubmit(async (value) => {
+                    const FirestoreRequest = (
+                        await import("@/firebase/firestore")
+                    ).default;
+
                     new FirestoreRequest("registered")
                         .addDoc({
                             ...value,

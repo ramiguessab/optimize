@@ -1,6 +1,5 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Html5Qrcode } from "html5-qrcode";
 import { Button } from "@/components/ui/button";
 import {
     Dialog,
@@ -10,7 +9,6 @@ import {
     DialogTitle,
     DialogDescription,
 } from "@/components/ui/dialog";
-import FirestoreRequest from "@/firebase/firestore";
 import { DocumentSnapshot } from "firebase/firestore";
 
 interface ICheckIn extends Object {
@@ -43,18 +41,22 @@ const ResultDialog = ({
     });
 
     useEffect(() => {
-        new FirestoreRequest("registered")
-            .getDoc("MWseEFANrItOl6aqTPq0")
-            .then((doc) => {
-                const check_in = doc as DocumentSnapshot;
-                const data = check_in.data() as ICheckIn;
-                const used = data.present;
-                const first_name = data.first_name;
-                const last_name = data.last_name;
-                const found = true;
-                setResult({ used, first_name, last_name, found });
-                setLoading(false);
-            });
+        import("@/firebase/firestore").then((imp) => {
+            const FirestoreRequest = imp.default;
+
+            new FirestoreRequest("registered")
+                .getDoc("MWseEFANrItOl6aqTPq0")
+                .then((doc) => {
+                    const check_in = doc as DocumentSnapshot;
+                    const data = check_in.data() as ICheckIn;
+                    const used = data.present;
+                    const first_name = data.first_name;
+                    const last_name = data.last_name;
+                    const found = true;
+                    setResult({ used, first_name, last_name, found });
+                    setLoading(false);
+                });
+        });
     }, []);
 
     if (loading) {
@@ -130,21 +132,24 @@ const ResultDialog = ({
         </Dialog>
     );
 };
+
 export default function CheckIn() {
     const [id, setId] = useState("");
 
     useEffect(() => {
-        const html5QrCode = new Html5Qrcode("qr");
+        import("html5-qrcode").then(({ Html5Qrcode }) => {
+            const html5QrCode = new Html5Qrcode("qr");
 
-        html5QrCode.start(
-            { facingMode: "environment" },
-            {
-                fps: 30,
-                qrbox: { width: 300, height: 300 },
-            },
-            (text) => {},
-            () => {}
-        );
+            html5QrCode.start(
+                { facingMode: "environment" },
+                {
+                    fps: 30,
+                    qrbox: { width: 300, height: 300 },
+                },
+                (text) => {},
+                () => {}
+            );
+        });
     }, []);
 
     return (

@@ -1,51 +1,54 @@
-"use client";
 import Link from "next/link";
-import { Sun, Moon } from "lucide-react";
+import ThemeToggle from "./navbar/darkMode";
 import { Button } from "./ui/button";
-import { usePathname } from "next/navigation";
-import { useTheme } from "next-themes";
 import Image from "next/image";
+import moment from "moment";
 
-export default function NavigationBar() {
-    const pathname = usePathname();
-    const splitedPath = pathname.split("/");
-    const { setTheme, theme } = useTheme();
+export default async function NavigationBar() {
+    const eventDay = moment("23 11 2023", "DD MM yyyy");
+    const today = new Date();
+    const isEventStarted = eventDay.isSameOrBefore(today, "day");
+    const isEventDay = eventDay.isSame(today, "day");
 
-    if (
-        splitedPath.length >= 3 &&
-        splitedPath.includes("admin") &&
-        splitedPath.includes("quiz")
-    ) {
-        return null;
-    } else {
-        return (
-            <div className="border-b-2 dark:border-b-zinc-900 sborder-b-zinc-100 flex flex-row justify-between items-center p-6 backdrop-blur-sm backdrop-grayscale dark:backdrop-brightness-50 sticky top-0">
-                <Link href={"/"}>
-                    <Image
-                        src={"/optimize_logo.png"}
-                        alt={"optimize logo"}
-                        width={64}
-                        height={64}
-                    />
-                </Link>
-                <div className="flex items-center gap-4">
-                    <Link href={"/profile/login"}>
-                        <Button variant={"ghost"}>Login</Button>
-                    </Link>
-                    <Button
-                        variant={"outline"}
-                        size={"icon"}
-                        onClick={() => {
-                            theme === "light"
-                                ? setTheme("dark")
-                                : setTheme("light");
-                        }}
-                    >
-                        <Sun className="dark:hidden" />
-                        <Moon className="hidden dark:block" />
-                    </Button>
-                </div>
+    const workshopsDay = eventDay.clone().add(1, "day");
+
+    const isEventEnds = workshopsDay.isBefore(today, "day");
+
+    return (
+        <div className="border-b-2 dark:border-b-zinc-900 sborder-b-zinc-100 flex flex-row justify-between items-center p-6 backdrop-blur-sm backdrop-grayscale dark:backdrop-brightness-50 sticky top-0">
+            <Link href={"/"}>
+                <Image
+                    src={"/optimize_logo.png"}
+                    alt={"optimize logo"}
+                    width={64}
+                    height={64}
+                    priority
+                />
+            </Link>
+            <div className="flex items-center gap-4">
+                {isEventStarted ? (
+                    <>
+                        {isEventEnds ? (
+                            <Link href={"/profile/certificate"}>
+                                <Button variant={"ghost"}>
+                                    Take Your Certificate
+                                </Button>
+                            </Link>
+                        ) : (
+                            <Button variant={"outline"} disabled>
+                                You Will Take Your Certificate Here
+                            </Button>
+                        )}
+                        {isEventDay ? (
+                            <Link href={"/games/quiz"}>
+                                <Button variant={"ghost"}>Take The Quiz</Button>
+                            </Link>
+                        ) : null}
+                    </>
+                ) : null}
+
+                <ThemeToggle />
             </div>
-        );
-    }
+        </div>
+    );
 }

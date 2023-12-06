@@ -8,8 +8,8 @@ import {
     TableHead,
     TableRow,
 } from "@/components/ui/table";
-import FirestoreRequest from "@/firebase/firestore";
-import { QuerySnapshot } from "firebase/firestore";
+
+import { QuerySnapshot, Unsubscribe } from "firebase/firestore";
 
 interface QuizResult {
     answers: boolean[];
@@ -20,14 +20,26 @@ interface QuizResult {
 const QuizTable = () => {
     const [results, setResults] = useState<QuizResult[]>([]);
     useEffect(() => {
-        return new FirestoreRequest("quiz_response").onSnapshot((snap) => {
-            const resultTemp: QuizResult[] = [];
-            (snap as QuerySnapshot).docs.forEach((doc) => {
-                resultTemp.push(doc.data() as QuizResult);
-            });
+        let unsubscribe: Unsubscribe | undefined;
+        import("@/firebase/firestore").then((imp) => {
+            const FirestoreRequest = imp.default;
+            unsubscribe = new FirestoreRequest("quiz_response").onSnapshot(
+                (snap) => {
+                    const resultTemp: QuizResult[] = [];
+                    (snap as QuerySnapshot).docs.forEach((doc) => {
+                        resultTemp.push(doc.data() as QuizResult);
+                    });
 
-            setResults([...resultTemp]);
-        }, "collection");
+                    setResults([...resultTemp]);
+                },
+                "collection"
+            );
+        });
+        return () => {
+            if (unsubscribe) {
+                unsubscribe();
+            }
+        };
     }, []);
 
     return (

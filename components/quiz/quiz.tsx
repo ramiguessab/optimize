@@ -1,33 +1,9 @@
 "use client";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { type Dispatch, type SetStateAction, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Checkbox } from "@/components/ui/checkbox";
-import FirestoreRequest from "@/firebase/firestore";
-
-interface Question {
-    question: string;
-    choises: string[];
-    response: string;
-}
-
-const questions: Question[] = [
-    {
-        question: "How Are you",
-        choises: ["good", "so so", "bad"],
-        response: "good",
-    },
-    {
-        question: "what did you do today",
-        choises: ["eat", "studied"],
-        response: "studied",
-    },
-    {
-        question: "what did you do today",
-        choises: ["eat", "studied"],
-        response: "studied",
-    },
-];
+import { Question } from "@/app/games/quiz/page";
 
 const Separator = () => {
     return <div className="border border-dashed border-neutral-300" />;
@@ -76,10 +52,12 @@ const Choises = ({
 const Submition = ({
     choises,
     response,
+    onSubmit,
     setAnswers,
 }: {
     choises: string[];
     response: string;
+    onSubmit: () => void;
     setAnswers: Dispatch<SetStateAction<boolean[]>>;
 }) => {
     const [checked, setChecked] = useState("");
@@ -98,7 +76,7 @@ const Submition = ({
                 />
                 <Button
                     className="bg-yellow-500 hover:bg-yellow-600 dark:text-white dark:bg-yellow-600 hover:dark:bg-yellow-700"
-                    onClick={() => {
+                    onClick={async () => {
                         if (checked) {
                             setAnswers((prev) => [
                                 ...prev,
@@ -106,6 +84,7 @@ const Submition = ({
                             ]);
                             setChecked("");
                             setError(false);
+                            await onSubmit();
                         } else {
                             setError(true);
                         }
@@ -118,21 +97,11 @@ const Submition = ({
     );
 };
 
-export default function Quiz() {
+export default function Quiz({ questions }: { questions: Question[] }) {
     const [answers, setAnswers] = useState<boolean[]>([]);
     const questionNum = answers.length;
 
     const question = questions[questionNum];
-
-    useEffect(() => {
-        if (answers.length === questions.length) {
-            new FirestoreRequest("quiz_response").addDoc({
-                answers,
-                started: new Date(),
-                finished: new Date(),
-            });
-        }
-    }, [answers]);
 
     return (
         <>
@@ -158,6 +127,20 @@ export default function Quiz() {
                             choises={question.choises}
                             setAnswers={setAnswers}
                             response={question.response}
+                            onSubmit={async () => {
+                                if (answers.length === questions.length - 1) {
+                                    const FirestoreRequest = (
+                                        await import("@/firebase/firestore")
+                                    ).default;
+                                    new FirestoreRequest(
+                                        "quiz_response"
+                                    ).addDoc({
+                                        answers,
+                                        started: new Date(),
+                                        finished: new Date(),
+                                    });
+                                }
+                            }}
                         />
                     </motion.div>
                 </div>

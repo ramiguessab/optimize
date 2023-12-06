@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -24,76 +24,59 @@ import {
 } from "@/components/ui/card";
 
 const formSchema = z.object({
-    email: z.string().email().nonempty(),
-    password: z.string().nonempty(),
+    id: z.string().nonempty("Please fill this field"),
 });
 
 export default function Login() {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
+        defaultValues: { id: "" },
     });
+
     return (
         <div className="pt-4">
             <Card className="max-w-lg mx-auto max-md:bg-none max-md:bg-transparent max-md:dark:bg-transparent max-md:border-none">
                 <CardHeader className="text-center">
-                    <CardTitle>Login Form</CardTitle>
+                    <CardTitle>Certificate</CardTitle>
                     <CardDescription className="text-balance">
-                        Please login so you can get into your vault or any
-                        provided content and don&apos;t worry if you are
-                        accepted you are already registred 😉
+                        Please enter the id you recived in the the email we sent
+                        your to get your certificate and you become OPTIMIZED 🚀
+                        🥳
                     </CardDescription>
                 </CardHeader>
                 <Form {...form}>
                     <form
-                        onSubmit={form.handleSubmit((values) => {
-                            console.log(values);
+                        onSubmit={form.handleSubmit(async (values) => {
+                            const { pdf } = await import("@react-pdf/renderer");
+                            const { Certificate } = await import(
+                                "@/components/certificate/certificate"
+                            );
+                            const blob = await pdf(
+                                <Certificate name="rami" />
+                            ).toBlob();
+                            window.open(URL.createObjectURL(blob));
                         })}
                     >
                         <CardContent className="flex flex-col gap-6">
                             <FormField
-                                name="email"
+                                name="id"
                                 control={form.control}
                                 render={({ field }) => (
                                     <FormItem>
                                         <div className="flex justify-between">
-                                            <FormLabel>Email</FormLabel>
+                                            <FormLabel>ID</FormLabel>
                                             <FormMessage />
                                         </div>
 
                                         <FormControl>
                                             <Input
                                                 {...field}
-                                                type="email"
-                                                placeholder="you@email.com"
+                                                placeholder="222cfee40bc0575b81c96c0b0230be0a"
                                             />
                                         </FormControl>
 
                                         <FormDescription>
-                                            The same email you used in the event
-                                            form
-                                        </FormDescription>
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                name="password"
-                                control={form.control}
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <div className="flex justify-between">
-                                            <FormLabel>Password</FormLabel>
-                                            <FormMessage />
-                                        </div>
-                                        <FormControl>
-                                            <Input
-                                                {...field}
-                                                type="password"
-                                                placeholder="********"
-                                            />
-                                        </FormControl>
-                                        <FormDescription>
-                                            The password is sent to your email
-                                            when we approved you
+                                            It is in your email
                                         </FormDescription>
                                     </FormItem>
                                 )}
@@ -105,7 +88,7 @@ export default function Login() {
                                 className="w-full dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:text-white bg-yellow-500 hover:bg-yellow-600 "
                                 type="submit"
                             >
-                                Login
+                                Get Certificate
                             </Button>
                         </CardFooter>
                     </form>

@@ -1,6 +1,6 @@
 "use client";
 import { usePathname } from "next/navigation";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { Lightbulb, LucideIcon, ClipboardCheck, Sheet } from "lucide-react";
 import React from "react";
 import Link from "next/link";

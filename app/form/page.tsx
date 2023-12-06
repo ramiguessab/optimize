@@ -1,8 +1,13 @@
-import { Button } from "@/components/ui/button";
-import { Instagram, Facebook, Linkedin } from "lucide-react";
-import RegistrationForm from "@/components/register/form";
+"use client";
 
-const Register = async () => {
+import { Button } from "@/components/ui/button";
+import dynamic from "next/dynamic";
+import { Instagram, Facebook, Linkedin } from "lucide-react";
+const RegistrationForm = dynamic(() => import("@/components/register/form"), {
+    loading: () => null,
+});
+
+const Register = () => {
     return (
         <div className="flex flex-col gap-8 max-w-screen-lg mx-auto p-8">
             <h1 className="text-5xl font-bold mx-auto leading-tight">
