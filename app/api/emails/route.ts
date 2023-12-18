@@ -2,8 +2,10 @@ import FirestoreRequest from "@/firebase/firestore";
 import { NextResponse, NextRequest } from "next/server";
 import QrCode from "qrcode";
 import { Resend } from "resend";
+import process from "process";
 
-const API_KEY = "re_2a5SWiGR_6de25CXUGo97r37wYZhEctPq";
+const API_KEY = process.env.RESEND_APIKEY;
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 
 // const resend = new Resend(API_KEY);
 
@@ -13,6 +15,13 @@ interface IEMails {
 }
 
 export async function POST(request: NextRequest) {
+    const password = request.cookies.get("password");
+    if (!password || password.value !== ADMIN_PASSWORD) {
+        return NextResponse.json("password is invalid or undefined", {
+            status: 401,
+        });
+    }
+
     const body: { emails: IEMails[] } = await request.json();
     let resend;
     let task;
