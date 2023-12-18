@@ -32,7 +32,7 @@ export default function RootLayout({
                 >
                     <NavigationBar />
                     {children}
-                    <AdminNavbar />
+                    {/* <AdminNavbar /> */}
                 </ThemeProvider>
             </body>
         </html>

@@ -27,11 +27,11 @@ export default function SuccessSubmission({ open }: ISuccessSubmissionProps) {
                             remind you that we sent the emails
                         </DialogDescription>
                     </DialogHeader>
-                    <DialogFooter>
+                    {/* <DialogFooter>
                         <Link href={"/"} className="w-full">
                             <Button className="w-full">Goodbye!!!!</Button>
                         </Link>
-                    </DialogFooter>
+                    </DialogFooter> */}
                 </DialogContent>
             </Dialog>
         </>

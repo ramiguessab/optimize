@@ -31,43 +31,65 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 
+export const workshops = [
+    "None",
+    "Ai in finance (الذكاء الاصطناعي في التمويل) ",
+    "Ai in robotics (الذكاء الاصطناعي في الربوتات)",
+    "Ai in marketing (الذكاء الاصطناعي في تسويق)",
+    "Ai in design (الذكاء الاصطناعي في تصميم)",
+    "Ai in startups (الذكاء الاصطناعي في الشركات الناشئة)",
+] as const;
+
 const formSchema = z.object({
-    first_name: z.string(),
-    last_name: z.string(),
-    email: z.string(),
-    birth_year: z.string(),
-    work: z.string(),
-    more: z.string(),
-    first_edition: z.string(),
+    full_name: z.string().nonempty("Required"),
+    email: z.string().email().nonempty("Required"),
+    occupation: z.string().nonempty("Required"),
+    tell_something: z.string().nonempty("Required"),
+    how_did_know: z.string().nonempty("Required"),
+    best_part: z.string().nonempty("Required"),
+    expectation: z.string().nonempty("Required"),
+    lunch: z.enum(["yes", "no"]),
+    workshop: z.enum(workshops),
+    why_choose_you: z.string().nonempty("Required"),
 });
 
 export type RegistrationSchema = z.infer<typeof formSchema>;
 
 export default function RegistrationForm() {
     const [submited, setSubmited] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const form = useForm<RegistrationSchema>({
-        defaultValues: { first_name: "", email: "", last_name: "", more: "" },
+        defaultValues: {
+            full_name: "",
+            email: "",
+            occupation: "",
+            best_part: "",
+            expectation: "",
+            how_did_know: "",
+            lunch: undefined,
+            tell_something: "",
+            why_choose_you: "",
+            workshop: undefined,
+        },
         resolver: zodResolver(formSchema),
     });
 
     return (
         <Form {...form}>
             <form
-                className="flex gap-8 flex-col"
+                className="flex gap-8 flex-col direction-reverse"
                 onSubmit={form.handleSubmit(async (value) => {
                     const FirestoreRequest = (
                         await import("@/firebase/firestore")
                     ).default;
+                    setLoading(true);
 
                     new FirestoreRequest("registered")
                         .addDoc({
                             ...value,
                             accepted: false,
                             email_sent: false,
-                            birth_year: parseInt(value.birth_year),
-                            first_edition:
-                                value.first_edition === "yes" ? true : false,
                         })
                         .then(() => {
                             window.scrollTo(0, 0);
@@ -77,33 +99,24 @@ export default function RegistrationForm() {
             >
                 <Confetti running={submited} />
                 <SuccessSubmission open={submited} />
+                <div className="">
+                    <h2 className="text-2xl">First Day (اليوم الاول)</h2>
+                    <div className="border border-dashed border-neutral-300" />
+                </div>
                 <FormField
-                    name="first_name"
+                    name="full_name"
                     control={form.control}
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>First Name</FormLabel>
+                            <FormLabel>First Name (الاسم الكامل)</FormLabel>
                             <FormControl>
-                                <Input {...field}></Input>
+                                <Input
+                                    {...field}
+                                    placeholder="John Doe"
+                                ></Input>
                             </FormControl>
                             <FormDescription>
-                                Your first name Please 😄
-                            </FormDescription>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-                <FormField
-                    name="last_name"
-                    control={form.control}
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Last Name</FormLabel>
-                            <FormControl>
-                                <Input {...field}></Input>
-                            </FormControl>
-                            <FormDescription>
-                                Your last name too 😁
+                                Your full name Please 😄
                             </FormDescription>
                             <FormMessage />
                         </FormItem>
@@ -114,121 +127,27 @@ export default function RegistrationForm() {
                     control={form.control}
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Email</FormLabel>
+                            <FormLabel>Email (البريد الالكتروني)</FormLabel>
                             <FormControl>
-                                <Input {...field}></Input>
+                                <Input
+                                    {...field}
+                                    placeholder="you@email.com"
+                                ></Input>
                             </FormControl>
-                            <FormDescription>
-                                Let Us Contact You 😉
-                            </FormDescription>
+                            <FormDescription>Your email too 😁</FormDescription>
                             <FormMessage />
                         </FormItem>
                     )}
                 />
-
                 <FormField
-                    name="first_edition"
+                    name="occupation"
                     control={form.control}
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>
-                                You been present in 1st Edition?
-                            </FormLabel>
+                            <FormLabel>Occupation (مهنتك)</FormLabel>
                             <FormControl>
-                                <RadioGroup
-                                    onValueChange={field.onChange}
-                                    defaultValue={field.value}
-                                    className="flex flex-col space-y-1 gap-2"
-                                >
-                                    <FormItem className="flex items-center space-x-2 space-y-0">
-                                        <FormControl>
-                                            <RadioGroupItem value="no" />
-                                        </FormControl>
-                                        <FormLabel>No</FormLabel>
-                                    </FormItem>
-                                    <FormItem className="flex items-center space-x-2 space-y-0">
-                                        <FormControl>
-                                            <RadioGroupItem value="yes" />
-                                        </FormControl>
-                                        <FormLabel>Yes</FormLabel>
-                                    </FormItem>
-                                </RadioGroup>
+                                <Input {...field} placeholder="Student"></Input>
                             </FormControl>
-                            <FormDescription>
-                                It was good but we gonna optimize it more 🚀
-                            </FormDescription>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-
-                <FormField
-                    name="birth_year"
-                    control={form.control}
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Birth Year</FormLabel>
-                            <Select
-                                onValueChange={field.onChange}
-                                defaultValue={field.value}
-                            >
-                                <FormControl>
-                                    <SelectTrigger>
-                                        <SelectValue
-                                            placeholder={
-                                                "Select Your Birthyear"
-                                            }
-                                        />
-                                    </SelectTrigger>
-                                </FormControl>
-                                <ScrollArea>
-                                    <SelectContent className="h-80">
-                                        {[...Array(100)].map((_, index) => (
-                                            <SelectItem
-                                                value={`${2023 - index}`}
-                                                key={index}
-                                            >
-                                                {`${2023 - index}`}
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </ScrollArea>
-                            </Select>
-                            <FormDescription>
-                                Happy Birth Year 😅
-                            </FormDescription>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-
-                <FormField
-                    name="work"
-                    control={form.control}
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Work</FormLabel>
-                            <Select
-                                onValueChange={field.onChange}
-                                defaultValue={field.value}
-                            >
-                                <FormControl>
-                                    <SelectTrigger>
-                                        <SelectValue
-                                            placeholder={
-                                                "Select Your Current Work"
-                                            }
-                                        ></SelectValue>
-                                    </SelectTrigger>
-                                </FormControl>
-                                <ScrollArea>
-                                    <SelectContent className="max-h-80">
-                                        <SelectItem value={`student`}>
-                                            {`Student`}
-                                        </SelectItem>
-                                    </SelectContent>
-                                </ScrollArea>
-                            </Select>
                             <FormDescription>Niiice 🫡</FormDescription>
                             <FormMessage />
                         </FormItem>
@@ -236,18 +155,20 @@ export default function RegistrationForm() {
                 />
 
                 <FormField
-                    name="more"
+                    name="tell_something"
                     control={form.control}
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>Tell us more</FormLabel>
-
+                            <FormLabel>
+                                Tell us something about you? (اخبرنا شيء عن
+                                نفسك؟)
+                            </FormLabel>
                             <FormControl>
                                 <Textarea
                                     {...field}
                                     placeholder="We just love to know our people more 😇"
                                     className="resize-none"
-                                ></Textarea>
+                                />
                             </FormControl>
 
                             <FormDescription>
@@ -258,11 +179,188 @@ export default function RegistrationForm() {
                     )}
                 />
 
-                {!submited && (
-                    <Button className="bg-yellow-500 dark:bg-yellow-600 dark:text-white dark:hover:text-neutral-950">
-                        Submit
-                    </Button>
-                )}
+                <FormField
+                    name="how_did_know"
+                    control={form.control}
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>
+                                How did you hear about Optimize? (كيف تعرفت على
+                                اوبتيمايز؟)
+                            </FormLabel>
+                            <FormControl>
+                                <Input
+                                    {...field}
+                                    placeholder="Social Media"
+                                ></Input>
+                            </FormControl>
+                            <FormDescription>
+                                He/She is a good friend or you scroll a lot 🤔
+                            </FormDescription>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+
+                <FormField
+                    name="best_part"
+                    control={form.control}
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>
+                                Best Part of Optimize? (افضل جزء من اوبتيمايز؟)
+                            </FormLabel>
+                            <FormControl>
+                                <Input
+                                    {...field}
+                                    placeholder="The fun part"
+                                ></Input>
+                            </FormControl>
+                            <FormDescription>
+                                I am sure you liked the 1st edition 😉
+                            </FormDescription>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+
+                <FormField
+                    name="expectation"
+                    control={form.control}
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>
+                                What do you expect from Optimize? (ماذا تتوقع من
+                                اوبتيمايز؟)
+                            </FormLabel>
+                            <FormControl>
+                                <Input
+                                    {...field}
+                                    placeholder="Something very niiice"
+                                ></Input>
+                            </FormControl>
+                            <FormDescription>
+                                You will see better 😊
+                            </FormDescription>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+
+                <FormField
+                    name="lunch"
+                    control={form.control}
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>
+                                اليوم سيكون طويلا و قد تحتاج للأكل للحفاظ على
+                                تركيزك هل تريد الحصول على وجبة الغداء مقابل 200
+                                دج ؟
+                            </FormLabel>
+                            <FormControl>
+                                <RadioGroup
+                                    onValueChange={field.onChange}
+                                    defaultValue={field.value}
+                                    className="flex flex-col space-y-1 gap-2"
+                                >
+                                    <FormItem className="flex items-center space-x-2 space-y-0">
+                                        <FormControl>
+                                            <RadioGroupItem value={"no"} />
+                                        </FormControl>
+                                        <FormLabel>No</FormLabel>
+                                    </FormItem>
+                                    <FormItem className="flex items-center space-x-2 space-y-0">
+                                        <FormControl>
+                                            <RadioGroupItem value={"yes"} />
+                                        </FormControl>
+                                        <FormLabel>Yes</FormLabel>
+                                    </FormItem>
+                                </RadioGroup>
+                            </FormControl>
+                            <FormDescription>
+                                يرجى العلم أن عدد الحاضرين محدود تأكد من أخذ
+                                وقتك و الإجابة بدقة ،سيتم إعلام المختارين عن
+                                طريق البريد الالكتروني قريبا ،راقب وسائل التواصل
+                                الخاصة بنا حتى يصلك الجديد !
+                            </FormDescription>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+                <div className="">
+                    <h2 className="text-2xl">Second Day (اليوم الثاني)</h2>
+                    <div className="border border-dashed border-neutral-300" />
+                </div>
+                <FormField
+                    name="workshop"
+                    control={form.control}
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>
+                                Which workshop will you choose? (ماهي الورشة
+                                التي ستقوم باختيارها ؟)
+                            </FormLabel>
+                            <Select
+                                onValueChange={field.onChange}
+                                defaultValue={field.value}
+                            >
+                                <FormControl>
+                                    <SelectTrigger>
+                                        <SelectValue
+                                            placeholder={"Select Your Workshop"}
+                                        />
+                                    </SelectTrigger>
+                                </FormControl>
+
+                                <SelectContent>
+                                    {workshops.map((workshops) => (
+                                        <SelectItem
+                                            value={workshops}
+                                            key={workshops}
+                                        >
+                                            {workshops}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
+                            <FormDescription>See you there 🫡</FormDescription>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+
+                <FormField
+                    name="why_choose_you"
+                    control={form.control}
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>
+                                Among all others applicants, why should we
+                                choose you? (من بين جميع المتقدمين لماذا يجب
+                                اختيارك؟)
+                            </FormLabel>
+                            <FormControl>
+                                <Textarea
+                                    {...field}
+                                    placeholder="Just talk any thing or... let break the ice 🥶"
+                                    className="resize-none"
+                                />
+                            </FormControl>
+
+                            <FormDescription>
+                                Nice to meet you 🤝
+                            </FormDescription>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+
+                <Button
+                    disabled={loading}
+                    className="bg-yellow-500 dark:bg-yellow-600 dark:text-white dark:hover:text-neutral-950"
+                >
+                    {loading ? "Loading..." : "Submit"}
+                </Button>
             </form>
         </Form>
     );

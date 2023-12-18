@@ -40,7 +40,7 @@ export default class FirestoreRequest {
         }
     }
 
-    async addDoc(data: any) {
+    async addDoc<T extends Object>(data: T) {
         return await addDoc(this.collection, data);
     }
 
@@ -55,15 +55,11 @@ export default class FirestoreRequest {
     }
 
     onSnapshot(
-        onSnap: (snapshot: QuerySnapshot | DocumentSnapshot) => void,
+        onSnap: (snapshot: QuerySnapshot<DocumentData, DocumentData>) => void,
         on: "collection" | "document" | "query",
         id?: string
     ) {
-        if (on === "document") {
-            return onSnapshot(this.docRef(id!), onSnap);
-        } else if (on === "collection") {
-            return onSnapshot(this.collection, onSnap);
-        }
+        return onSnapshot(this.collection, onSnap);
     }
 
     async updateDoc(id: string, data: any) {

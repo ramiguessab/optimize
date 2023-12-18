@@ -1,7 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
 import Filters from "./filters";
+import Firestore from "@/firebase/firestore";
 import {
+    Row,
     ColumnFiltersState,
     flexRender,
     useReactTable,
@@ -20,11 +22,13 @@ import * as Table from "@/components/ui/table";
 import { ArrowDownUp, ArrowUp, ArrowDown } from "lucide-react";
 
 import type { RegistrationSchema } from "@/components/register/form";
+import FirestoreRequest from "@/firebase/firestore";
 
 export interface IRegistred extends RegistrationSchema {
     selected: boolean;
     id: string;
     accepted: boolean;
+    email_sent: boolean;
 }
 
 const columnsHelper = createColumnHelper<IRegistred>();
@@ -55,33 +59,95 @@ const columns = [
             </div>
         ),
     }),
-    columnsHelper.accessor("first_name", { header: "First Name" }),
-    columnsHelper.accessor("last_name", { header: "Last Name" }),
-    columnsHelper.accessor("birth_year", { header: "Birth Year" }),
+    columnsHelper.accessor("id", { header: "ID" }),
+    columnsHelper.accessor("full_name", { header: "Full Name" }),
     columnsHelper.accessor("email", { header: "Email" }),
-    columnsHelper.accessor("first_edition", {
-        header: "Edition One",
-
+    columnsHelper.accessor("occupation", { header: "Occupation" }),
+    columnsHelper.accessor("tell_something", {
+        header: "Something about you?",
+    }),
+    columnsHelper.accessor("how_did_know", {
+        header: "How do you know us?",
+    }),
+    columnsHelper.accessor("best_part", { header: "Best Part" }),
+    columnsHelper.accessor("expectation", { header: "Expectations" }),
+    columnsHelper.accessor("lunch", {
+        header: "Lunch",
         cell: (props) => {
-            return props.getValue() ? "✅" : "❌";
+            return props.getValue() === "yes" ? "✅" : "❌";
         },
     }),
-    columnsHelper.accessor("work", { header: "Work" }),
-    columnsHelper.accessor("more", { header: "tell More" }),
+    columnsHelper.accessor("workshop", {
+        header: "Workshop",
+    }),
+    columnsHelper.accessor("why_choose_you", {
+        header: "Why you?",
+    }),
     columnsHelper.accessor("accepted", {
         header: "Accepted",
+        cell: (props) => {
+            const accepted = props.getValue();
+            return (
+                <Button
+                    onClick={() => {
+                        new FirestoreRequest("registered").updateDoc(
+                            props.row.getValue("id"),
+                            { accepted: !accepted }
+                        );
+                    }}
+                >
+                    {accepted ? "✅" : "❌"}
+                </Button>
+            );
+        },
+    }),
+    columnsHelper.accessor("email_sent", {
+        header: "Email Sent",
         cell: (props) => {
             return props.getValue() ? "✅" : "❌";
         },
     }),
 ];
 
-export default function AdminDataTable({
-    serverData,
-}: {
-    serverData: IRegistred[];
-}) {
-    const [data, setData] = useState(serverData);
+const SendEmail = ({ selectedRows }: { selectedRows: Row<IRegistred>[] }) => {
+    const [loading, setLoading] = useState(false);
+    return (
+        <Button
+            disabled={selectedRows.length === 0 || loading}
+            className="w-full mb-4"
+            onClick={async () => {
+                setLoading(true);
+                const hash: Map<string, boolean> = new Map();
+                const emails: { email: string; id: string }[] = [];
+
+                selectedRows.forEach((row) => {
+                    if (!hash.has(row.original.email)) {
+                        emails.push({
+                            email: row.original.email,
+                            id: row.original.id,
+                        });
+
+                        hash.set(row.original.email, true);
+                    }
+                });
+                console.log(emails);
+                await fetch("http://localhost:3000/api", {
+                    method: "POST",
+                    headers: { "content-type": "application/json" },
+                    body: JSON.stringify({
+                        emails: emails,
+                    }),
+                });
+                setLoading(false);
+            }}
+        >
+            {loading ? "Loading..." : "Send Emails"}
+        </Button>
+    );
+};
+
+export default function AdminDataTable({}: {}) {
+    const [data, setData] = useState<IRegistred[]>([]);
     const [sorting, setSorting] = useState<ColumnSort[]>([]);
     const [rowSelection, setRowSelection] = useState({});
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -94,85 +160,82 @@ export default function AdminDataTable({
         onSortingChange: setSorting,
         onRowSelectionChange: setRowSelection,
         onColumnFiltersChange: setColumnFilters,
-        getPaginationRowModel: getPaginationRowModel(),
+        // getPaginationRowModel: getPaginationRowModel(),
         getCoreRowModel: getCoreRowModel(),
         getSortedRowModel: getSortedRowModel(),
         getFilteredRowModel: getFilteredRowModel(),
     });
-    const pageSizes = [10, 20, 30, 50, data.length];
+    // const pageSizes = [10, 20, 30, 50, data.length];
     const selectedRows = table.getSelectedRowModel().rows;
-    const tableState = table.getState();
+    // const tableState = table.getState();
+    useEffect(() => {
+        const unsub = new Firestore("registered").onSnapshot((snap) => {
+            const docs = snap.docs;
+            const data = docs.map((doc) => ({
+                id: doc.id,
+                ...doc.data(),
+            })) as IRegistred[];
+            setData(data);
+        }, "collection");
 
+        return unsub;
+    }, []);
     return (
         <>
             <Filters table={table} />
-            <Button
-                disabled={selectedRows.length === 0}
-                className="w-full mb-4"
-                onClick={() => {
-                    const emails = new Set();
+            <SendEmail selectedRows={selectedRows} />
+            <div className="flex flex-row justify-between items-center p-4">
+                <p>
+                    {selectedRows.length} of {data.length} selected
+                </p>
 
-                    selectedRows.forEach((row) => {
-                        emails.add(row.original.email);
-                    });
-                    console.log(emails);
-                }}
-            >
-                Send Emails
-            </Button>
+                {/* <div className="flex flex-row gap-4">
+                    <Button
+                        onClick={() => {
+                            table.previousPage();
+                        }}
+                        disabled={!table.getCanPreviousPage()}
+                    >
+                        Previous
+                    </Button>
+                    <Button
+                        onClick={() => {
+                            table.nextPage();
+                        }}
+                        disabled={!table.getCanNextPage()}
+                    >
+                        Next
+                    </Button>
+                </div>
+                <div className="">
+                    <Select.Select
+                        defaultValue={`${tableState.pagination.pageSize}`}
+                        onValueChange={(value) => {
+                            table.setPageSize(parseInt(value));
+                        }}
+                    >
+                        <Select.SelectTrigger>
+                            <Select.SelectValue>
+                                {tableState.pagination.pageSize}
+                            </Select.SelectValue>
+                        </Select.SelectTrigger>
+                        <Select.SelectContent>
+                            {pageSizes.map((pageSize, index) => (
+                                <Select.SelectItem
+                                    key={pageSize}
+                                    value={`${pageSize}`}
+                                >
+                                    {pageSize === data.length
+                                        ? "All"
+                                        : pageSize}
+                                </Select.SelectItem>
+                            ))}
+                        </Select.SelectContent>
+                    </Select.Select>
+                </div> */}
+            </div>
+
             <Table.Table>
-                <Table.TableCaption>
-                    <div className="flex flex-row justify-between p-4">
-                        <p>
-                            {selectedRows.length} of {data.length} selected
-                        </p>
-
-                        <div className="flex flex-row gap-4">
-                            <Button
-                                onClick={() => {
-                                    table.previousPage();
-                                }}
-                                disabled={!table.getCanPreviousPage()}
-                            >
-                                Previous
-                            </Button>
-                            <Button
-                                onClick={() => {
-                                    table.nextPage();
-                                }}
-                                disabled={!table.getCanNextPage()}
-                            >
-                                Next
-                            </Button>
-                        </div>
-                        <div className="">
-                            <Select.Select
-                                defaultValue={`${tableState.pagination.pageSize}`}
-                                onValueChange={(value) => {
-                                    table.setPageSize(parseInt(value));
-                                }}
-                            >
-                                <Select.SelectTrigger>
-                                    <Select.SelectValue>
-                                        {tableState.pagination.pageSize}
-                                    </Select.SelectValue>
-                                </Select.SelectTrigger>
-                                <Select.SelectContent>
-                                    {pageSizes.map((pageSize, index) => (
-                                        <Select.SelectItem
-                                            key={pageSize}
-                                            value={`${pageSize}`}
-                                        >
-                                            {pageSize === data.length
-                                                ? "All"
-                                                : pageSize}
-                                        </Select.SelectItem>
-                                    ))}
-                                </Select.SelectContent>
-                            </Select.Select>
-                        </div>
-                    </div>
-                </Table.TableCaption>
                 <Table.TableHeader>
                     {table.getHeaderGroups().map((headGroup) => (
                         <Table.TableRow

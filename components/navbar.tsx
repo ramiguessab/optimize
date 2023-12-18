@@ -5,7 +5,7 @@ import Image from "next/image";
 import moment from "moment";
 
 export default async function NavigationBar() {
-    const eventDay = moment("23 11 2023", "DD MM yyyy");
+    const eventDay = moment("24 12 2023", "DD MM yyyy");
     const today = new Date();
     const isEventStarted = eventDay.isSameOrBefore(today, "day");
     const isEventDay = eventDay.isSame(today, "day");
