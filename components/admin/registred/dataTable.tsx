@@ -130,8 +130,9 @@ const SendEmail = ({ selectedRows }: { selectedRows: Row<IRegistred>[] }) => {
                         hash.set(row.original.email, true);
                     }
                 });
-                console.log(emails);
-                await fetch("http://localhost:3000/api", {
+
+                const origin = document.location.origin;
+                await fetch(`${origin}/api/emails`, {
                     method: "POST",
                     headers: { "content-type": "application/json" },
                     body: JSON.stringify({
