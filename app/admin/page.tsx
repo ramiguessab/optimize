@@ -10,7 +10,8 @@ export default function Page() {
     const [password, setPassword] = useState("");
     const disabled = password === "";
     return (
-        <>
+        <div className="flex flex-col items-center gap-6 p-4">
+            <p>Entre your admin password</p>
             <Input
                 onChange={(event) => {
                     setPassword(event.currentTarget.value);
@@ -20,11 +21,11 @@ export default function Page() {
                 disabled={disabled}
                 onClick={() => {
                     document.cookie = `password=${password};`;
-                    router.replace("/admin/table");
+                    router.replace("/admin/panel/table");
                 }}
             >
                 {!disabled ? "Login" : "Enter your Password"}
             </Button>
-        </>
+        </div>
     );
 }

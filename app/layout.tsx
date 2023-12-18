@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import NavigationBar from "@/components/navbar";
 import AdminNavbar from "@/components/admin/adminNavbar";
 import { ThemeProvider } from "@/components/theme-provider";
-
 import { Nunito } from "next/font/google";
 
 const nunito = Nunito({ weight: ["800"], subsets: ["latin"] });
@@ -32,7 +31,7 @@ export default function RootLayout({
                 >
                     <NavigationBar />
                     {children}
-                    {/* <AdminNavbar /> */}
+                    <AdminNavbar />
                 </ThemeProvider>
             </body>
         </html>

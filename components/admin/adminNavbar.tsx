@@ -14,35 +14,31 @@ interface IRouter {
 const routes: IRouter[] = [
     {
         displayName: "sheet",
-        route: "/",
+        route: "/admin/panel/table",
         icon: Sheet,
     },
     {
         displayName: "quiz",
-        route: "quiz",
+        route: "/admin/panel/quiz",
         icon: Lightbulb,
     },
     {
         displayName: "check in",
-        route: "check-in",
+        route: "/admin/panel/check-in",
         icon: ClipboardCheck,
     },
 ];
 
 export default function AdminNavbar() {
     const pathname = usePathname();
-
-    const pathSplited = pathname.split("/");
-    if (pathSplited.includes("admin")) {
+    if (pathname.startsWith("/admin/panel/")) {
         return (
             <div className="bg-neutral-50 dark:bg-neutral-950 dark:border-neutral-800 mb-4 px-4 py-2 border rounded-xl gap-2 w-fit fixed left-0 right-0 bottom-0  mx-auto flex">
                 {routes.map((route) => {
-                    const selected =
-                        pathSplited.at(-1) === route.route ||
-                        (pathSplited.length === 2 && route.route === "/");
+                    const selected = pathname === route.route;
 
                     return (
-                        <Link href={`/admin/${route.route}`} key={route.route}>
+                        <Link href={route.route} key={route.route}>
                             <Button
                                 variant={selected ? "default" : "ghost"}
                                 className="gap-2 capitalize"
