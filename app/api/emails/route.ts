@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
             subject: "qrcode test",
             // attachments: [{ content: qrcode }],
             html: `<main>
-                
+
                 <p>${email.id}</p>
             <main>`,
         });

@@ -64,6 +64,7 @@ export default function RegistrationForm() {
                             ...value,
                         }),
                     }).then(() => {
+                        console.log("submited");
                         window.scrollTo(0, 0);
                         setSubmited(true);
                     });

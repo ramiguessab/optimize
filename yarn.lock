@@ -3424,7 +3424,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-next@npm:latest":
+"eslint-config-next@npm:^14.0.4":
   version: 14.0.4
   resolution: "eslint-config-next@npm:14.0.4"
   dependencies:
@@ -5565,7 +5565,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next@npm:latest":
+"next@npm:^14.0.4":
   version: 14.0.4
   resolution: "next@npm:14.0.4"
   dependencies:
@@ -5966,19 +5966,19 @@ __metadata:
     class-variance-authority: ^0.7.0
     clsx: ^2.0.0
     eslint: 8.46.0
-    eslint-config-next: latest
+    eslint-config-next: ^14.0.4
     firebase: ^10.2.0
     framer-motion: ^10.16.0
     html5-qrcode: ^2.3.8
     lucide-react: 0.263.1
     moment: ^2.29.4
-    next: latest
+    next: ^14.0.4
     next-themes: ^0.2.1
     postcss: 8.4.27
     qrcode: ^1.5.3
-    react: latest
+    react: ^18.2.0
     react-confetti: ^6.1.0
-    react-dom: latest
+    react-dom: ^18.2.0
     react-hook-form: ^7.45.4
     resend: ^2.0.0
     sharp: ^0.32.6
@@ -6451,7 +6451,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:18.2.0, react-dom@npm:latest":
+"react-dom@npm:18.2.0, react-dom@npm:^18.2.0":
   version: 18.2.0
   resolution: "react-dom@npm:18.2.0"
   dependencies:
@@ -6531,7 +6531,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:18.2.0, react@npm:latest":
+"react@npm:18.2.0, react@npm:^18.2.0":
   version: 18.2.0
   resolution: "react@npm:18.2.0"
   dependencies:
