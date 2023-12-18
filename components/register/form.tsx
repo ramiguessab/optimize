@@ -55,7 +55,9 @@ export default function RegistrationForm() {
                 className="flex gap-8 flex-col direction-reverse"
                 onSubmit={form.handleSubmit(async (value) => {
                     setLoading(true);
-                    await fetch("http://localhost:3000/api/form", {
+                    const origin = document.location.origin;
+
+                    await fetch(`${origin}/api/form`, {
                         headers: { "content-type": "application/json" },
                         method: "POST",
                         body: JSON.stringify({
