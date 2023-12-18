@@ -35,8 +35,8 @@ export const workshops = [
     "None",
     "Ai in finance (الذكاء الاصطناعي في التمويل) ",
     "Ai in robotics (الذكاء الاصطناعي في الربوتات)",
-    "Ai in marketing (الذكاء الاصطناعي في تسويق)",
-    "Ai in design (الذكاء الاصطناعي في تصميم)",
+    "Ai in marketing (الذكاء الاصطناعي في التسويق)",
+    "Ai in design (الذكاء الاصطناعي في التصميم)",
     "Ai in startups (الذكاء الاصطناعي في الشركات الناشئة)",
 ] as const;
 
@@ -254,8 +254,8 @@ export default function RegistrationForm() {
                         <FormItem>
                             <FormLabel>
                                 اليوم سيكون طويلا و قد تحتاج للأكل للحفاظ على
-                                تركيزك هل تريد الحصول على وجبة الغداء مقابل 200
-                                دج ؟
+                                تركيزك هل تريد الحصول على وجبة الغداء( سندويتش +
+                                مشروب ) مقابل 200 دج ؟
                             </FormLabel>
                             <FormControl>
                                 <RadioGroup
@@ -265,15 +265,15 @@ export default function RegistrationForm() {
                                 >
                                     <FormItem className="flex items-center space-x-2 space-y-0">
                                         <FormControl>
-                                            <RadioGroupItem value={"no"} />
-                                        </FormControl>
-                                        <FormLabel>No</FormLabel>
-                                    </FormItem>
-                                    <FormItem className="flex items-center space-x-2 space-y-0">
-                                        <FormControl>
                                             <RadioGroupItem value={"yes"} />
                                         </FormControl>
                                         <FormLabel>Yes</FormLabel>
+                                    </FormItem>
+                                    <FormItem className="flex items-center space-x-2 space-y-0">
+                                        <FormControl>
+                                            <RadioGroupItem value={"no"} />
+                                        </FormControl>
+                                        <FormLabel>No</FormLabel>
                                     </FormItem>
                                 </RadioGroup>
                             </FormControl>
