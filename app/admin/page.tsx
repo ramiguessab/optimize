@@ -1,12 +1,30 @@
-import AdminDataTable from "@/components/admin/registred/dataTable";
-import { IRegistred } from "@/components/admin/registred/dataTable";
-import FirestoreRequest from "@/firebase/firestore";
-import { QueryDocumentSnapshot } from "firebase/firestore";
+"use client";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { cookies } from "next/headers";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
-export default async function Admin() {
+export default function Page() {
+    const router = useRouter();
+    const [password, setPassword] = useState("");
+    const disabled = password === "";
     return (
-        <div className="capitalize">
-            <AdminDataTable />
-        </div>
+        <>
+            <Input
+                onChange={(event) => {
+                    setPassword(event.currentTarget.value);
+                }}
+            />
+            <Button
+                disabled={disabled}
+                onClick={() => {
+                    document.cookie = `password=${password};`;
+                    router.replace("/admin/table");
+                }}
+            >
+                {!disabled ? "Login" : "Enter your Password"}
+            </Button>
+        </>
     );
 }
