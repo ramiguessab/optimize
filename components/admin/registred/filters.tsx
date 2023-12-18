@@ -2,10 +2,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Table } from "@tanstack/react-table";
 import { IRegistred } from "./dataTable";
-import { workshops } from "@/components/register/form";
-
+import { workshops } from "@/lib/form";
 import * as Select from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
 
 export default function Filters({ table }: { table: Table<IRegistred> }) {
     return (

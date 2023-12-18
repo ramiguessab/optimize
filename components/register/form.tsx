@@ -1,18 +1,14 @@
 "use client";
 import SuccessSubmission from "../success";
-import dynamic from "next/dynamic";
-
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-
+import { formSchema, workshops } from "@/lib/form";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import Confetti from "../confetti";
 import {
     Select,
@@ -30,28 +26,6 @@ import {
     FormLabel,
     FormMessage,
 } from "@/components/ui/form";
-
-export const workshops = [
-    "None",
-    "Ai in finance (الذكاء الاصطناعي في التمويل) ",
-    "Ai in robotics (الذكاء الاصطناعي في الربوتات)",
-    "Ai in marketing (الذكاء الاصطناعي في التسويق)",
-    "Ai in design (الذكاء الاصطناعي في التصميم)",
-    "Ai in startups (الذكاء الاصطناعي في الشركات الناشئة)",
-] as const;
-
-const formSchema = z.object({
-    full_name: z.string().nonempty("Required"),
-    email: z.string().email().nonempty("Required"),
-    occupation: z.string().nonempty("Required"),
-    tell_something: z.string().nonempty("Required"),
-    how_did_know: z.string().nonempty("Required"),
-    best_part: z.string().nonempty("Required"),
-    expectation: z.string().nonempty("Required"),
-    lunch: z.enum(["yes", "no"]),
-    workshop: z.enum(workshops),
-    why_choose_you: z.string().nonempty("Required"),
-});
 
 export type RegistrationSchema = z.infer<typeof formSchema>;
 
@@ -80,21 +54,17 @@ export default function RegistrationForm() {
             <form
                 className="flex gap-8 flex-col direction-reverse"
                 onSubmit={form.handleSubmit(async (value) => {
-                    const FirestoreRequest = (
-                        await import("@/firebase/firestore")
-                    ).default;
                     setLoading(true);
-
-                    new FirestoreRequest("registered")
-                        .addDoc({
+                    await fetch("http://localhost:3000/api/form", {
+                        headers: { "content-type": "application/json" },
+                        method: "POST",
+                        body: JSON.stringify({
                             ...value,
-                            accepted: false,
-                            email_sent: false,
-                        })
-                        .then(() => {
-                            window.scrollTo(0, 0);
-                            setSubmited(true);
-                        });
+                        }),
+                    }).then(() => {
+                        window.scrollTo(0, 0);
+                        setSubmited(true);
+                    });
                 })}
             >
                 <Confetti running={submited} />

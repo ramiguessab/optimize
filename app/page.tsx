@@ -1,11 +1,8 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import dynamic from "next/dynamic";
 import { Instagram, Facebook, Linkedin } from "lucide-react";
-const RegistrationForm = dynamic(() => import("@/components/register/form"), {
-    loading: () => null,
-});
+import RegistrationForm from "@/components/register/form";
 
 const Register = () => {
     return (
