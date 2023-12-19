@@ -1,4 +1,5 @@
-import { db } from "./app";
+import { db, storage } from "./app";
+import { StorageReference, ref, uploadBytes } from "firebase/storage";
 
 import {
     CollectionReference,
@@ -19,11 +20,6 @@ import {
     query,
     documentId,
 } from "firebase/firestore";
-
-//create AddDoc
-//retrive getDoc/getDocs
-//update updateDoc
-//delete deleteDoc
 
 export default class FirestoreRequest {
     collection: CollectionReference<DocumentData, DocumentData>;
@@ -68,5 +64,16 @@ export default class FirestoreRequest {
 
     async deleteDoc(id: string) {
         return await deleteDoc(this.docRef(id));
+    }
+}
+
+export class Storage {
+    reference: StorageReference;
+    constructor(name: string) {
+        this.reference = ref(storage, name);
+    }
+
+    async uploadFile(file: Buffer) {
+        return uploadBytes(this.reference, file, { contentType: "image/*" });
     }
 }

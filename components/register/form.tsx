@@ -80,7 +80,7 @@ export default function RegistrationForm() {
                     control={form.control}
                     render={({ field }) => (
                         <FormItem>
-                            <FormLabel>First Name (الاسم الكامل)</FormLabel>
+                            <FormLabel>Full Name (الاسم الكامل)</FormLabel>
                             <FormControl>
                                 <Input
                                     {...field}
@@ -285,14 +285,20 @@ export default function RegistrationForm() {
                                 </FormControl>
 
                                 <SelectContent>
-                                    {workshops.map((workshops) => (
-                                        <SelectItem
-                                            value={workshops}
-                                            key={workshops}
-                                        >
-                                            {workshops}
-                                        </SelectItem>
-                                    ))}
+                                    {workshops
+                                        .filter(
+                                            (workshop) =>
+                                                workshop !==
+                                                "Ai in finance (الذكاء الاصطناعي في التمويل)"
+                                        )
+                                        .map((workshops) => (
+                                            <SelectItem
+                                                value={workshops}
+                                                key={workshops}
+                                            >
+                                                {workshops}
+                                            </SelectItem>
+                                        ))}
                                 </SelectContent>
                             </Select>
                             <FormDescription>See you there 🫡</FormDescription>
@@ -307,9 +313,8 @@ export default function RegistrationForm() {
                     render={({ field }) => (
                         <FormItem>
                             <FormLabel>
-                                Among all others applicants, why should we
-                                choose you? (من بين جميع المتقدمين لماذا يجب
-                                اختيارك؟)
+                                Among all other applicants, why should we choose
+                                you? (من بين جميع المتقدمين لماذا يجب اختيارك؟)
                             </FormLabel>
                             <FormControl>
                                 <Textarea

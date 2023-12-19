@@ -1,8 +1,11 @@
-import FirestoreRequest from "@/firebase/firestore";
+import FirestoreRequest, { Storage } from "@/firebase/firestore";
+import { getDownloadURL } from "firebase/storage";
 import { NextResponse, NextRequest } from "next/server";
 import QrCode from "qrcode";
 import { Resend } from "resend";
 import process from "process";
+
+import OptimizeEMail from "@/components/email/email";
 
 const API_KEY = process.env.RESEND_APIKEY;
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
@@ -12,6 +15,8 @@ const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 interface IEMails {
     email: string;
     id: string;
+    workshop: string;
+    full_name: string;
 }
 
 export async function POST(request: NextRequest) {
@@ -28,18 +33,27 @@ export async function POST(request: NextRequest) {
     const emailTasks = [];
 
     for (let email of body.emails) {
-        // const qrcode = await QrCode.toBuffer(email.id);
+        const qrcode = await QrCode.toBuffer(email.id);
+
+        const url = await getDownloadURL(
+            (
+                await new Storage(`qrcodes/${email.id}`).uploadFile(qrcode)
+            ).ref
+        );
 
         resend = new Resend(API_KEY);
-        task = resend.emails.send({
-            from: "optimize@casa-gift.shop",
-            to: email.email,
-            subject: "qrcode test",
-            // attachments: [{ content: qrcode }],
-            html: `<main>
 
-                <p>${email.id}</p>
-            <main>`,
+        task = resend.emails.send({
+            from: "secondEdition@optimize-jijel.org",
+            to: email.email,
+            subject: "Optimize Invitation",
+            react: OptimizeEMail({
+                accepted: true,
+                full_name: email.full_name,
+                id: email.id,
+                qrCode: url,
+                workshop: email.workshop,
+            }),
         });
         emailTasks.push(task);
     }

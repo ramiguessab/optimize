@@ -118,13 +118,20 @@ const SendEmail = ({ selectedRows }: { selectedRows: Row<IRegistred>[] }) => {
             onClick={async () => {
                 setLoading(true);
                 const hash: Map<string, boolean> = new Map();
-                const emails: { email: string; id: string }[] = [];
+                const emails: {
+                    email: string;
+                    id: string;
+                    workshop: string;
+                    full_name: string;
+                }[] = [];
 
                 selectedRows.forEach((row) => {
                     if (!hash.has(row.original.email)) {
                         emails.push({
                             email: row.original.email,
                             id: row.original.id,
+                            full_name: row.original.full_name,
+                            workshop: row.original.workshop,
                         });
 
                         hash.set(row.original.email, true);

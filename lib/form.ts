@@ -1,7 +1,7 @@
 import * as z from "zod";
 export const workshops = [
     "None",
-    "Ai in finance (الذكاء الاصطناعي في التمويل) ",
+    "Ai in finance (الذكاء الاصطناعي في التمويل)",
     "Ai in robotics (الذكاء الاصطناعي في الربوتات)",
     "Ai in marketing (الذكاء الاصطناعي في التسويق)",
     "Ai in design (الذكاء الاصطناعي في التصميم)",
