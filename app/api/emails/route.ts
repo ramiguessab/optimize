@@ -31,11 +31,13 @@ export async function POST(request: NextRequest) {
     let resend;
     let task;
     const emailTasks = [];
+    let qrcode;
+    let url;
 
     for (let email of body.emails) {
-        const qrcode = await QrCode.toBuffer(email.id);
+        qrcode = await QrCode.toBuffer(email.id);
 
-        const url = await getDownloadURL(
+        url = await getDownloadURL(
             (
                 await new Storage(`qrcodes/${email.id}`).uploadFile(qrcode)
             ).ref

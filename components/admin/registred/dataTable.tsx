@@ -14,8 +14,8 @@ import {
     getFilteredRowModel,
     ColumnSort,
 } from "@tanstack/react-table";
-import { Input } from "../../ui/input";
-import * as Select from "../../ui/select";
+// import { Input } from "../../ui/input";
+// import * as Select from "../../ui/select";
 import { Button } from "../../ui/button";
 import * as Table from "@/components/ui/table";
 
@@ -191,7 +191,7 @@ export default function AdminDataTable({}: {}) {
     return (
         <>
             <Filters table={table} />
-            <SendEmail selectedRows={selectedRows} />
+            {/* <SendEmail selectedRows={selectedRows} /> */}
             <div className="flex flex-row justify-between items-center p-4">
                 <p>
                     {selectedRows.length} of {data.length} selected
