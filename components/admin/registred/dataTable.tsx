@@ -280,7 +280,7 @@ export default function AdminDataTable({}: {}) {
                             className="dark:border-b-neutral-900"
                         >
                             {row.getVisibleCells().map((cell) => (
-                                <Table.TableCell key={cell.id}>
+                                <Table.TableCell key={cell.id} className="w-96">
                                     {flexRender(
                                         cell.column.columnDef.cell,
                                         cell.getContext()
