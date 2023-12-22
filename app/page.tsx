@@ -1,55 +1,29 @@
-"use client";
+import Register from "@/components/register/register";
+import moment from "moment";
 
-import { Button } from "@/components/ui/button";
-import { Instagram, Facebook, Linkedin } from "lucide-react";
-import RegistrationForm from "@/components/register/form";
-
-const Register = () => {
+const ClosedRegistration = () => {
     return (
-        <div className="flex flex-col gap-8 max-w-screen-lg mx-auto p-8">
-            <h1 className="text-5xl font-bold mx-auto leading-tight">
-                Optimize 2nd Edition Registration Form 🚀
+        <main className="flex flex-col gap-8 max-w-screen-lg mx-auto p-8 text-center">
+            <p className="text-9xl animate-bounce">🚀</p>
+            <h1 className="text-5xl font-bold mx-auto leading-tight underline decoration-4 decoration-yellow-200">
+                Registrations are closed
             </h1>
-            <div className="flex gap-2">
-                <a
-                    href="https://www.instagram.com/optimize.jijel/"
-                    target="_blank"
-                >
-                    <Button
-                        size={"icon"}
-                        className="dark:text-zinc-200 bg-gradient-to-bl from-[#405DE6] via-[#5851DB]  via-[#833AB4]  via-[#C13584]  via-[#FD1D1D]  to-[#FFDC80]"
-                    >
-                        <Instagram />
-                    </Button>
-                </a>
-                <a
-                    href="https://www.facebook.com/optimize.jijel"
-                    target="_blank"
-                >
-                    <Button
-                        size={"icon"}
-                        className="dark:text-zinc-200 bg-sky-700 dark:bg-sky-700 hover:dark:bg-sky-500 hover:bg-sky-500"
-                    >
-                        <Facebook />
-                    </Button>
-                </a>
-                <a
-                    href="https://www.linkedin.com/company/optimize-association/"
-                    target="_blank"
-                >
-                    <Button
-                        size={"icon"}
-                        className="dark:text-zinc-200 bg-slate-800 dark:bg-slate-800 hover:dark:bg-slate-600 hover:bg-slate-600"
-                    >
-                        <Linkedin />
-                    </Button>
-                </a>
-            </div>
-            <RegistrationForm />
-        </div>
+            <p className="text-3xl font-bold mx-auto leading-tight">
+                Stay tuned to our social media 📱 we will send emails 📧 any
+                time.
+            </p>
+        </main>
     );
 };
 
-export default function Form() {
+export default async function Form() {
+    const registrations_closed = moment(
+        "23 12 2023 00",
+        "DD MM yyyy HH"
+    ).isSameOrBefore();
+    if (registrations_closed) {
+        return <ClosedRegistration />;
+    }
+
     return <Register />;
 }

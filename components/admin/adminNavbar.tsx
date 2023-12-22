@@ -1,7 +1,13 @@
 "use client";
 import { usePathname } from "next/navigation";
 import { Button } from "../ui/button";
-import { Lightbulb, LucideIcon, ClipboardCheck, Sheet } from "lucide-react";
+import {
+    Lightbulb,
+    LucideIcon,
+    ClipboardCheck,
+    Sheet,
+    MessageCircle,
+} from "lucide-react";
 import React from "react";
 import Link from "next/link";
 
@@ -16,6 +22,11 @@ const routes: IRouter[] = [
         displayName: "sheet",
         route: "/admin/panel/table",
         icon: Sheet,
+    },
+    {
+        displayName: "messsages",
+        route: "/admin/panel/messages",
+        icon: MessageCircle,
     },
     {
         displayName: "quiz",

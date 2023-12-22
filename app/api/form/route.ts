@@ -7,7 +7,6 @@ export async function POST(request: NextRequest) {
 
     const isValidBody = formSchema.safeParse(body);
     if (!isValidBody.success) {
-        console.log("error");
         return NextResponse.json(isValidBody.error);
     }
 
@@ -16,6 +15,5 @@ export async function POST(request: NextRequest) {
         accepted: false,
         email_sent: false,
     });
-    console.log("success");
     return NextResponse.json("success");
 }

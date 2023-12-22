@@ -5,14 +5,10 @@ import Image from "next/image";
 import moment from "moment";
 
 export default async function NavigationBar() {
-    const eventDay = moment("24 12 2023", "DD MM yyyy");
-    const today = new Date();
-    const isEventStarted = eventDay.isSameOrBefore(today, "day");
-    const isEventDay = eventDay.isSame(today, "day");
-
-    const workshopsDay = eventDay.clone().add(1, "day");
-
-    const isEventEnds = workshopsDay.isBefore(today, "day");
+    const canTakeCertificate = moment(
+        "25 12 2023 18",
+        "DD MM yyyy HH"
+    ).isSameOrBefore();
 
     return (
         <div className="border-b-2 dark:border-b-zinc-900 sborder-b-zinc-100 flex flex-row justify-between items-center p-6 backdrop-blur-sm backdrop-grayscale dark:backdrop-brightness-50 sticky top-0">
@@ -26,26 +22,11 @@ export default async function NavigationBar() {
                 />
             </Link>
             <div className="flex items-center gap-4">
-                {isEventStarted ? (
-                    <>
-                        {isEventEnds ? (
-                            <Link href={"/profile/certificate"}>
-                                <Button variant={"ghost"}>
-                                    Take Your Certificate
-                                </Button>
-                            </Link>
-                        ) : (
-                            <Button variant={"outline"} disabled>
-                                You Will Take Your Certificate Here
-                            </Button>
-                        )}
-                        {isEventDay ? (
-                            <Link href={"/games/quiz"}>
-                                <Button variant={"ghost"}>Take The Quiz</Button>
-                            </Link>
-                        ) : null}
-                    </>
-                ) : null}
+                {canTakeCertificate && (
+                    <Link href={"/profile/certificate"}>
+                        <Button variant={"ghost"}>Take Your Certificate</Button>
+                    </Link>
+                )}
 
                 <ThemeToggle />
             </div>

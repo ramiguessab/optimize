@@ -52,7 +52,7 @@ export default function RegistrationForm() {
     return (
         <Form {...form}>
             <form
-                className="flex gap-8 flex-col direction-reverse"
+                className="flex gap-8 flex-col"
                 onSubmit={form.handleSubmit(async (value) => {
                     setLoading(true);
                     const origin = document.location.origin;
