@@ -50,22 +50,22 @@ export default function OptimizeEMail({
                         </Section>
                         <Section>
                             <Text>
-                                🔸Greetings
+                                🔸Dear Optimize Enthusiast
                                 <strong className="capitalize">
                                     {" "}
                                     {full_name}
                                 </strong>{" "}
-                                🫡,
+                                🫡, I hope this message finds you buzzing with
+                                excitement and ready for an extraordinary
+                                experience! 🌟
                             </Text>
                             <Text>
-                                It has been a while, huh? 🙂 I am delighted to
-                                extend an invitation to you for Optimize second
-                                edition. Please remember to bring your
-                                enthusiasm and excitement 👜 and ensure a good
-                                night&apos;s rest 🛌. The event will be lit, it
-                                promises to be engaging, blending education and
-                                enjoyment. I&apos;m really looking forward to
-                                seeing you there!
+                                🔸Congratulations, you&apos;ve secured your spot
+                                for the Optimize Jijel Second Edition on Sunday,
+                                December 24th, where we&apos;ll be diving deep
+                                into the fascinating realm of &puot;Exploring
+                                AI: The New Frontiers of science&puot; Your
+                                Schedule:
                             </Text>
                         </Section>
                         <Section>
@@ -117,31 +117,33 @@ export default function OptimizeEMail({
                         </Section>
                         <Section>
                             <Text>
-                                🔸Oh, I almost forgot 😅. While navigating
-                                through our database, I accidentally 🥲 sent
-                                some emails and stumbled upon something
-                                pertaining to you🤭. Please accept it—I am sure
-                                you will need it🤫:
+                                🔸Let me introduce an innovative check-in
+                                process ! 🎟 here is your personalized QR code .
+                                Simply present it during check-in for swift
+                                access to all the exciting activities:
                             </Text>
                             <Text className="border border-solid border-[#eaeaea] rounded-xl text-center py-4 text-lg">
                                 <strong>{id}</strong>
-                            </Text>
-                            <Text>
-                                🔸Consequently, I assume your appearance
-                                resembles this 📸...
                             </Text>
                             <Img
                                 src={qrCode}
                                 className="w-64 h-64 mx-auto"
                             ></Img>
                             <Text>
-                                🔸Lastly,🤔 ... I acknowledge that you might be
-                                wondering about the identity behind the use of
-                                &apos;I&apos; and the purpose. Well,🙃 for
-                                certain reasons, I am unable to disclose my
-                                identity🫠.... but I assure you, we will meet in
-                                the third edition😉. I give you my word.
-                                Farewell, friend.👋
+                                🔸Now, let&apos;s address the mysterious
+                                &apos;I&apos; in this email. 🕵️ For various
+                                reasons, I can&apos;t reveal my identity just
+                                yet... but stay tuned, as I look forward to
+                                meeting you in the third edition! 😉 Your
+                                journey with Optimize is just beginning.
+                            </Text>
+                            <Text>
+                                🔸 Thank you for being a part of Optimize
+                                Jijel&apos;s vibrant community! 🙌 I can&apos;t
+                                wait to make this edition an unforgettable
+                                experience for you dear optimizer. See you at
+                                Optimize Jijel Second Edition—where the future
+                                meets innovation!
                             </Text>
                         </Section>
                         <Hr />

@@ -28,6 +28,7 @@ interface ICheckIn {
     why_choose_you: string;
     workshop: typeof workshops;
     checked_1st: boolean;
+    checked_2nd: boolean;
 }
 
 interface DialogResult {
@@ -80,7 +81,7 @@ const ResultDialog = ({
                 </DialogHeader>
                 {state.status === "not found" ? (
                     <p>USER NOT FOUND</p>
-                ) : state.data?.checked_1st ? (
+                ) : state.data?.checked_2nd ? (
                     <p>Used QR Code</p>
                 ) : (
                     <div>
@@ -96,17 +97,17 @@ const ResultDialog = ({
                             <span>Workshop:</span>{" "}
                             <span>{state.data?.workshop}</span>
                         </div>
-                        <div>
+                        {/* <div>
                             <span>Lunch:</span>{" "}
                             <span>{state.data?.lunch ? "✅" : "❌"}</span>
-                        </div>
+                        </div> */}
                         <div>
                             <span>Email:</span> <span>{state.data?.email}</span>
                         </div>
                     </div>
                 )}
                 <DialogFooter className="flex">
-                    {state.data?.lunch && !state.data.checked_1st ? (
+                    {/* {state.data?.lunch && !state.data.checked_1st ? (
                         <div className="flex flex-col gap-2">
                             <Button
                                 className="w-full"
@@ -143,27 +144,27 @@ const ResultDialog = ({
                                 Not Payed
                             </Button>
                         </div>
-                    ) : (
-                        <Button
-                            className="w-full"
-                            onClick={() => {
-                                if (
-                                    state.status === "found" &&
-                                    !state.data!.checked_1st
-                                ) {
-                                    new FirestoreRequest("registered")
-                                        .updateDoc(id, { checked_1st: true })
-                                        .then(() => {
-                                            setId("");
-                                        });
-                                } else {
-                                    setId("");
-                                }
-                            }}
-                        >
-                            Cancel
-                        </Button>
-                    )}
+                    ) : ( */}
+                    <Button
+                        className="w-full"
+                        onClick={() => {
+                            if (
+                                state.status === "found" &&
+                                !state.data!.checked_2nd
+                            ) {
+                                new FirestoreRequest("registered")
+                                    .updateDoc(id, { checked_2nd: true })
+                                    .then(() => {
+                                        setId("");
+                                    });
+                            } else {
+                                setId("");
+                            }
+                        }}
+                    >
+                        Okey
+                    </Button>
+                    {/* )} */}
                 </DialogFooter>
             </DialogContent>
         </Dialog>

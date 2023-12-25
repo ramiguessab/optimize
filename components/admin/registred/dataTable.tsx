@@ -123,6 +123,7 @@ const SendEmail = ({ selectedRows }: { selectedRows: Row<IRegistred>[] }) => {
                     id: string;
                     workshop: string;
                     full_name: string;
+                    accepted: boolean;
                 }[] = [];
 
                 selectedRows.forEach((row) => {
@@ -132,6 +133,7 @@ const SendEmail = ({ selectedRows }: { selectedRows: Row<IRegistred>[] }) => {
                             id: row.original.id,
                             full_name: row.original.full_name,
                             workshop: row.original.workshop,
+                            accepted: row.original.accepted,
                         });
 
                         hash.set(row.original.email, true);
@@ -191,7 +193,7 @@ export default function AdminDataTable({}: {}) {
     return (
         <>
             <Filters table={table} />
-            {/* <SendEmail selectedRows={selectedRows} /> */}
+            <SendEmail selectedRows={selectedRows} />
             <div className="flex flex-row justify-between items-center p-4">
                 <p>
                     {selectedRows.length} of {data.length} selected

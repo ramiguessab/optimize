@@ -17,6 +17,7 @@ interface IEMails {
     id: string;
     workshop: string;
     full_name: string;
+    accepted: boolean;
 }
 
 export async function POST(request: NextRequest) {
@@ -30,7 +31,6 @@ export async function POST(request: NextRequest) {
     const body: { emails: IEMails[] } = await request.json();
     let resend;
     let task;
-    const emailTasks = [];
     let qrcode;
     let url;
 
@@ -46,38 +46,21 @@ export async function POST(request: NextRequest) {
         resend = new Resend(API_KEY);
 
         task = resend.emails.send({
-            from: "secondEdition@optimize-jijel.org",
+            from: "second_edition@optimize-jijel.org",
             to: email.email,
-            subject: "Optimize Invitation",
+            subject: `Your Exclusive Invitation to Optimize Jijel Second Edition 🚀 - "Exploring AI: The New Frontiers of science" 🌐`,
             react: OptimizeEMail({
-                accepted: true,
+                accepted: email.accepted,
                 full_name: email.full_name,
                 id: email.id,
                 qrCode: url,
                 workshop: email.workshop,
             }),
         });
-        emailTasks.push(task);
+        await new FirestoreRequest("registered").updateDoc(email.id, {
+            email_sent: true,
+        });
     }
-
-    const emails = await Promise.allSettled(emailTasks);
-    const updates: Promise<void>[] = [];
-    emails.forEach((email, index) => {
-        if (email.status === "fulfilled") {
-            if (email.value.error === null && email.value.data) {
-                updates.push(
-                    new FirestoreRequest("registered").updateDoc(
-                        body.emails[index].id,
-                        {
-                            email_sent: true,
-                        }
-                    )
-                );
-            }
-        }
-    });
-
-    await Promise.allSettled(updates);
 
     return NextResponse.json("hello");
 }

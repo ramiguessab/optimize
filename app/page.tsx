@@ -17,13 +17,13 @@ const ClosedRegistration = () => {
 };
 
 export default async function Form() {
-    // const registrations_closed = moment(
-    //     "23 12 2023 00",
-    //     "DD MM yyyy HH"
-    // ).isSameOrBefore();
-    // if (registrations_closed) {
-    return <ClosedRegistration />;
-    // }
+    // // const registrations_closed = moment(
+    // //     "23 12 2023 00",
+    // //     "DD MM yyyy HH"
+    // // ).isSameOrBefore();
+    // // if (registrations_closed) {
+    // return <ClosedRegistration />;
+    // // }
 
-    // return <Register />;
+    return <Register />;
 }
