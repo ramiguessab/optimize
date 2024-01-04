@@ -21,7 +21,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body
-                className={` dark:bg-black dark:text-neutral-300 selection:bg-yellow-200 dark:selection:bg-yellow-500 dark:selection:text-white selection:text-black`}
+                className={`${nunito.className} dark:bg-black dark:text-neutral-300 selection:bg-yellow-200 dark:selection:bg-yellow-500 dark:selection:text-white selection:text-black`}
             >
                 <ThemeProvider
                     attribute="class"
