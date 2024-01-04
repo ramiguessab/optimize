@@ -58,10 +58,17 @@ export default function MessagesForm() {
                         )}
                     />
                     <Button
+                        disabled={
+                            form.formState.isSubmitting ||
+                            form.formState.isSubmitSuccessful
+                        }
                         type="submit"
                         className="bg-yellow-500 dark:bg-yellow-600 dark:text-white dark:hover:text-neutral-950 w-full"
                     >
-                        Submit
+                        {form.formState.isSubmitSuccessful ||
+                        form.formState.isSubmitting
+                            ? "Loading..."
+                            : "Submit"}
                     </Button>
                 </form>
             </Form>

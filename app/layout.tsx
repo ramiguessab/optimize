@@ -8,8 +8,8 @@ import { Nunito } from "next/font/google";
 // const nunito = Nunito({ weight: ["800"], subsets: ["latin"] });
 
 export const metadata: Metadata = {
-    title: "Optimize 2nd Edition",
-    description: "Optimize second Edition is here!!!!!!",
+    title: "Optimize",
+    description: "Welcome to Optimize Official Website",
     icons: ["/optimize_logo.png"],
 };
 
