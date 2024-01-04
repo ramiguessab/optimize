@@ -5,7 +5,7 @@ import AdminNavbar from "@/components/admin/adminNavbar";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Nunito } from "next/font/google";
 
-const nunito = Nunito({ weight: ["800"], subsets: ["latin"] });
+// const nunito = Nunito({ weight: ["800"], subsets: ["latin"] });
 
 export const metadata: Metadata = {
     title: "Optimize 2nd Edition",
@@ -21,7 +21,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body
-                className={`${nunito.className} dark:bg-black dark:text-neutral-300 selection:bg-yellow-200 dark:selection:bg-yellow-500 dark:selection:text-white selection:text-black`}
+                className={` dark:bg-black dark:text-neutral-300 selection:bg-yellow-200 dark:selection:bg-yellow-500 dark:selection:text-white selection:text-black`}
             >
                 <ThemeProvider
                     attribute="class"
