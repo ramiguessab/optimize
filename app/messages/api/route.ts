@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import FirestoreRequest from "@/firebase/firestore";
+import { serverTimestamp } from "firebase/firestore";
 import { messageSchema } from "@/lib/message";
 
 export async function POST(req: NextRequest) {
@@ -10,7 +11,10 @@ export async function POST(req: NextRequest) {
         return NextResponse.json(isValidBody.error);
     }
 
-    await new FirestoreRequest("messages").addDoc(body);
+    await new FirestoreRequest("messages").addDoc({
+        ...body,
+        timestamp: serverTimestamp(),
+    });
 
     return NextResponse.json("success");
 }

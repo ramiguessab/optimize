@@ -8,13 +8,11 @@ export default function MessagesPage() {
                 Anonymous Message
             </h1>
             <p>
-                Hello again! It was an honor to meet you, and finally, I just
-                don&apos;t want to go suddenly with no ending. So, I just want
-                to say that if you have any suggestions, ideas, critiques, good
-                memories, etc., it would be good to just say it and let us know.
-                We will take care of it, and don&apos;t worry, as you can see,
-                the message is anonymous 😉. See you soon, or should I say in
-                the 3rd edition 😂!
+                Hello Optimizers 👋,your presence in our 2nd edition was truly
+                special. We&apos;ve crafted this anonymous message to gather
+                your thoughts or feedback, so feel free to share down below 👇.
+                Your insights matter, and we&apos;re here, ready to listen and
+                consider every perspective. Thank you for being a part of it! ✨
             </p>
             <MessagesForm />
         </main>
