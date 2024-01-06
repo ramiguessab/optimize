@@ -6,7 +6,7 @@ import moment from "moment";
 
 export default async function NavigationBar() {
     return (
-        <div className="border-b-2 dark:border-b-zinc-900 sborder-b-zinc-100 flex flex-row justify-between items-center p-6 backdrop-blur-sm backdrop-grayscale dark:backdrop-brightness-50 sticky top-0">
+        <div className="border-b-2 dark:border-b-zinc-900 border-b-zinc-100 flex flex-row justify-between items-center p-6 backdrop-blur-sm backdrop-grayscale dark:backdrop-brightness-50 sticky top-0">
             <Link href={"/"}>
                 <Image
                     src={"/optimize_logo.png"}

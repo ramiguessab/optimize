@@ -47,12 +47,14 @@ export default function MessagesForm() {
                                 <FormControl>
                                     <Textarea
                                         {...field}
-                                        placeholder="Dont be shy 😁"
+                                        placeholder="Don't be shy 😄 Please share your thoughts"
                                         className="resize-none"
                                     />
                                 </FormControl>
 
-                                <FormDescription>See yaaaa😝</FormDescription>
+                                <FormDescription>
+                                    See yaa😃 thank you for your feedback
+                                </FormDescription>
                                 <FormMessage />
                             </FormItem>
                         )}
